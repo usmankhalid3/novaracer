@@ -89,7 +89,7 @@
 	bodyDef.type = b2_dynamicBody;
 	
 	bodyDef.position.Set(associatedSprite.position.x/PTM_RATIO, associatedSprite.position.y/PTM_RATIO);
-	bodyDef.userData = associatedSprite;
+	bodyDef.userData = object;
 	b2Body *body = world->CreateBody(&bodyDef);
 	
 	// Define another box shape for our dynamic body.
@@ -149,10 +149,10 @@
     world->Step(dt, 10, 10);
     for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()) {
         if (b->GetUserData() != NULL) {
-            CCSprite *sprite = (CCSprite *)b->GetUserData();			
-            b2Vec2 b2Position = b2Vec2(sprite.position.x/PTM_RATIO,
-                                       sprite.position.y/PTM_RATIO);
-            float32 b2Angle = -1 * CC_DEGREES_TO_RADIANS(sprite.rotation);
+            GameObject *object = (GameObject *)b->GetUserData();			
+            b2Vec2 b2Position = b2Vec2([object sprite].position.x/PTM_RATIO,
+                                       [object sprite].position.y/PTM_RATIO);
+            float32 b2Angle = -1 * CC_DEGREES_TO_RADIANS([object sprite].rotation);
             b->SetTransform(b2Position, b2Angle);
 			//NSLog(@"position: (%f, %f)", b->GetPosition().x, b->GetPosition().y);
         }
@@ -167,8 +167,10 @@
 		b2Body *bodyA = contact.fixtureA->GetBody();
 		b2Body *bodyB = contact.fixtureB->GetBody();
 		if (bodyA->GetUserData() != NULL && bodyB->GetUserData() != NULL) {
-			CCSprite *spriteA = (CCSprite *) bodyA->GetUserData();
-			CCSprite *spriteB = (CCSprite *) bodyB->GetUserData();
+			GameObject * objA = (GameObject *)bodyA->GetUserData();
+			GameObject * objB = (GameObject *)bodyB->GetUserData();
+			CCSprite *spriteA = [objA sprite];
+			CCSprite *spriteB = [objB sprite];
 			
 			if (spriteA.tag == 1 && spriteB.tag == 2) {
 				toDestroy.push_back(bodyA);
@@ -179,25 +181,14 @@
 	}
 	
 	std::vector<b2Body *>::iterator pos2;
-	GameObject * objToDelete = nil;
 	for(pos2 = toDestroy.begin(); pos2 != toDestroy.end(); ++pos2) {
 		b2Body *body = *pos2;     
 		if (body->GetUserData() != NULL) {
-			CCSprite *sprite = (CCSprite *) body->GetUserData();
-			NSEnumerator * enumerator = [spaceObjects objectEnumerator];
-			GameObject * object;
-			while ((object = [enumerator nextObject])) {
-				CCSprite * tempSprite = [object sprite];
-				if (sprite == tempSprite) {
-					objToDelete = object;
-				}
-			}
-			[self removeChild:sprite cleanup:YES];
+			GameObject *object = (GameObject *) body->GetUserData();
+			[self removeChild:[object sprite] cleanup:YES];
+			[spaceObjects removeObject:object];
 		}
 		world->DestroyBody(body);
-	}
-	if (objToDelete!=nil) {
-		[spaceObjects removeObject:objToDelete];
 	}
 }
 
