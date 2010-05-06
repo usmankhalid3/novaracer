@@ -4,6 +4,7 @@
 #import "GameCamera.h"
 #import "SpaceLayer.h"
 #import "Speedometer.h"
+#import "GameButton.h"
 
 // HelloWorld Layer
 @interface GameLayer : CCLayer
@@ -15,6 +16,9 @@
 	float acceleration;	// in meters per second
 	float damping;		// in percentage
 	float rotationAngle;	// in degrees
+	GameButton * accelerateButton;
+	GameButton * rotateLeftButton;
+	GameButton * rotateRightButton;
 }
 
 @property(nonatomic, readwrite) float acceleration;
@@ -24,10 +28,10 @@
 
 // returns a Scene that contains the HelloWorld as the only child
 +(id) scene;
--(void) accelerateButtonTapped:(id)sender;
--(void) decelerateButtonTapped:(id)sender;
--(void) rotateLeftButtonTapped:(id)sender;
--(void) rotateRightButtonTapped:(id)sender;
+-(void) accelerateButtonTapStarted;
+-(void) decelerateButtonTapEnded;
+-(void) rotateLeftButtonTapped;
+-(void) rotateRightButtonTapped;
 -(void) setupButtons;
 -(void) setupCameraWithSize:(CGSize)size;
 -(void) setupBackground;

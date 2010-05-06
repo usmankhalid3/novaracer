@@ -154,6 +154,7 @@
                                        sprite.position.y/PTM_RATIO);
             float32 b2Angle = -1 * CC_DEGREES_TO_RADIANS(sprite.rotation);
             b->SetTransform(b2Position, b2Angle);
+			//NSLog(@"position: (%f, %f)", b->GetPosition().x, b->GetPosition().y);
         }
     }
 	
@@ -178,13 +179,25 @@
 	}
 	
 	std::vector<b2Body *>::iterator pos2;
+	GameObject * objToDelete = nil;
 	for(pos2 = toDestroy.begin(); pos2 != toDestroy.end(); ++pos2) {
 		b2Body *body = *pos2;     
 		if (body->GetUserData() != NULL) {
 			CCSprite *sprite = (CCSprite *) body->GetUserData();
+			NSEnumerator * enumerator = [spaceObjects objectEnumerator];
+			GameObject * object;
+			while ((object = [enumerator nextObject])) {
+				CCSprite * tempSprite = [object sprite];
+				if (sprite == tempSprite) {
+					objToDelete = object;
+				}
+			}
 			[self removeChild:sprite cleanup:YES];
 		}
 		world->DestroyBody(body);
+	}
+	if (objToDelete!=nil) {
+		[spaceObjects removeObject:objToDelete];
 	}
 }
 
@@ -195,7 +208,7 @@
 	}
 	world = NULL;
 	if (spaceObjects!=nil) {
-		[spaceObjects dealloc];
+		[spaceObjects release];
 	}
 	[spaceShip dealloc];
 	[super dealloc];
