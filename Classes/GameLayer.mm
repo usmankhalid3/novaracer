@@ -37,22 +37,22 @@
 	[camera setCameraSize:size];
 }
 
-- (void)accelerateButtonTapped:(id)sender {
+- (void)accelerateButtonTapStarted {
     accelerateShip = YES;
 }
 
--(void)decelerateButtonTapped:(id)sender {
+-(void)decelerateButtonTapEnded {
 	accelerateShip = NO;
 }
 
-- (void)rotateLeftButtonTapped:(id)sender {
+- (void)rotateLeftButtonTapped{
     float angleDegrees = [[spaceLayer spaceShip] currentRotation] + rotationAngle;
     float cocosAngle = -1 * angleDegrees;
     [[[spaceLayer spaceShip] sprite] runAction:[CCSequence actions: [CCRotateTo actionWithDuration:0.2f angle:cocosAngle], nil]];
 	[[spaceLayer spaceShip] setCurrentRotation:angleDegrees];
 }
 
-- (void)rotateRightButtonTapped:(id)sender {
+- (void)rotateRightButtonTapped {
     float angleDegrees = [[spaceLayer spaceShip] currentRotation] - rotationAngle;
     float cocosAngle = -1 * angleDegrees;
     [[[spaceLayer spaceShip] sprite] runAction:[CCSequence actions: [CCRotateTo actionWithDuration:0.2f angle:cocosAngle], nil]];
@@ -60,29 +60,13 @@
 }
 
 -(void) setupButtons {
-	CCMenuItem *accelerateButton = [CCMenuItemImage 
-									itemFromNormalImage:@"ButtonStar.png" selectedImage:@"ButtonStarSel.png" 
-									target:self selector:@selector(accelerateButtonTapped:)];
-    accelerateButton.position = ccp(400, 120);
+	accelerateButton = [[GameButton alloc] initButtonAtLocation:@"top.png" location:CGPointMake(240, 50)];
+	rotateLeftButton = [[GameButton alloc] initButtonAtLocation:@"left.png" location:CGPointMake(190, 20)];
+	rotateRightButton = [[GameButton alloc] initButtonAtLocation:@"right.png" location:CGPointMake(290, 20)];
 	
-	CCMenuItem *decelerateButton = [CCMenuItemImage 
-									itemFromNormalImage:@"ButtonStar.png" selectedImage:@"ButtonStarSel.png" 
-									target:self selector:@selector(decelerateButtonTapped:)];
-    decelerateButton.position = ccp(400, 60);
-	
-	CCMenuItem *rotateLeftButton = [CCMenuItemImage 
-									itemFromNormalImage:@"ButtonStar.png" selectedImage:@"ButtonStarSel.png" 
-									target:self selector:@selector(rotateLeftButtonTapped:)];
-    rotateLeftButton.position = ccp(350, 90);
-	
-	CCMenuItem *rotateRightButton = [CCMenuItemImage 
-									itemFromNormalImage:@"ButtonStar.png" selectedImage:@"ButtonStarSel.png" 
-									target:self selector:@selector(rotateRightButtonTapped:)];
-    rotateRightButton.position = ccp(450, 90);
-	
-    CCMenu *starMenu = [CCMenu menuWithItems:accelerateButton, decelerateButton, rotateLeftButton, rotateRightButton, nil];
-    starMenu.position = CGPointZero;
-    [self addChild:starMenu];	
+	[self addChild:[accelerateButton button]];
+	[self addChild:[rotateLeftButton button]];
+	[self addChild:[rotateRightButton button]];
 }
 
 
@@ -92,6 +76,8 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
+		
+		isTouchEnabled = true;
 		
 		acceleration = 10.0f;
 		rotationAngle = 10.0f;
@@ -124,6 +110,29 @@
 	[spaceLayer tick:dt];
 }
 
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+
+	for (UITouch * touch in touches) {
+		NSLog(@"here");
+		CGPoint location = [touch locationInView: [touch view]];
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		
+		if (CGRectContainsPoint([accelerateButton buttonRect], location)) {
+			[self accelerateButtonTapStarted];
+			//[accelerateButton tapStarted];
+		}
+		else if (CGRectContainsPoint([rotateLeftButton buttonRect], location)) {
+			[self rotateLeftButtonTapped];
+		}
+		else if (CGRectContainsPoint([rotateRightButton buttonRect], location)) {
+			[self rotateRightButtonTapped];
+		}
+	}
+}
+
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	[self decelerateButtonTapEnded];
+}
 
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc
@@ -133,6 +142,9 @@
 	// cocos2d will automatically release all the children (Label)
 	
 	// don't forget to call "super dealloc"
+	[accelerateButton dealloc];
+	[rotateLeftButton dealloc];
+	[rotateRightButton dealloc];
 	[spaceLayer release];
 	[camera dealloc];
 	[super dealloc];
