@@ -22,5 +22,6 @@
 
 -(void) accelerateShipBy:(float) force;
 -(CGPoint) calculateNewPosition:(CGPoint)point angleInRadians:(float)angle;
+-(float)speed;
 
 @end

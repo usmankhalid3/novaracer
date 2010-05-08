@@ -12,6 +12,7 @@
 #import "Box2D.h"
 #import "GLES-Render.h"
 #import "ContactListener.h"
+#import "CheckPoint.h"
 
 
 @interface SpaceLayer : CCLayer {
@@ -21,6 +22,7 @@
 	SpaceShip * spaceShip;
 	float damping;
 	ContactListener *contactListener;
+	CGPoint worldPosition;
 }
 
 @property(nonatomic, readonly) SpaceShip * spaceShip;
@@ -33,5 +35,6 @@
 -(void) setCameraPosition:(CGPoint)cameraPosition; // applies to all objects in this layer
 -(void) addPhysicsBody:(GameObject*)object;
 -(void) tick:(ccTime)dt;
+-(void) loadWorld;
 
 @end

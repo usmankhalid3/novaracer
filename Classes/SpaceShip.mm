@@ -15,9 +15,9 @@
 -(void) accelerateShipBy:(float) force {
 	currentVelocity.x = (currentVelocity.x + (force * cos(CC_DEGREES_TO_RADIANS(currentRotation+90.0f))))*(1.0f - dampingPercentage);
 	currentVelocity.y = (currentVelocity.y + (force * sin(CC_DEGREES_TO_RADIANS(currentRotation+90.0f))))*(1.0f - dampingPercentage);
-	//NSLog(@"new velocity: (%f, %f)", currentVelocity.x, currentVelocity.y);
 	worldPosition.x = worldPosition.x + currentVelocity.x;
 	worldPosition.y = worldPosition.y + currentVelocity.y;
+	//sprite.position = worldPosition;
 }
 
 -(CGPoint) calculateNewPosition:(CGPoint) point angleInRadians:(float)angle {
@@ -28,6 +28,10 @@
 
 -(void) setCurrentRotation:(float)newAngle {
 	currentRotation = (float)((int)newAngle % 360);
+}
+
+-(float) speed {
+	return sqrt(currentVelocity.x * currentVelocity.x + currentVelocity.y * currentVelocity.y);
 }
 
 @end

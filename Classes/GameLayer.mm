@@ -21,9 +21,18 @@
 
 -(void) setupBackground {
 	CCSprite * background = [CCSprite spriteWithFile:@"space5.jpg"];
-	background.position = ccp(0, 0);
-	background.anchorPoint = ccp(0, 0);
+	background.position = ccp(240, 160);
+	//background.anchorPoint = ccp(0, 0);
 	[self addChild:background];
+	
+	/*background = [[ScrollingBackground alloc] initWithFile:@"space5.jpg"]; 
+	
+	ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT }; 
+	[background.texture setTexParameters:&params]; 
+	background.position = CGPointMake(240, 160); 
+	[self addChild:background z:1];*/
+	
+	
 }
 
 -(void) setupSpeedometer {
@@ -41,7 +50,7 @@
     accelerateShip = YES;
 }
 
--(void)decelerateButtonTapEnded {
+- (void)accelerateButtonTapEnded {
 	accelerateShip = NO;
 }
 
@@ -85,8 +94,8 @@
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		
-		//[self setupBackground];
-		//[self setupSpeedometer];
+		[self setupBackground];
+		[self setupSpeedometer];
 		[self setupButtons];
 		[self setupCameraWithSize:size];
 		spaceLayer = [SpaceLayer node];
@@ -103,17 +112,24 @@
 	if (accelerateShip == YES) {
 		force = acceleration * dt;
 	}
+	
+	/*CGPoint texOffset = background.texOffset;
+	texOffset.y = texOffset.y - (50*dt);
+	texOffset.x = texOffset.x - (50*dt);
+	background.texOffset = texOffset;*/
+	
 	//[speedometer displaySpeed:force];
 	[[spaceLayer spaceShip] accelerateShipBy:force];
 	[camera updateCamera: [[spaceLayer spaceShip] worldPosition]];
 	[spaceLayer setCameraPosition:[camera anchorPoint]];
 	[spaceLayer tick:dt];
+	//CGPoint point = [[spaceLayer spaceShip] worldPosition];
+	//NSLog(@"%@, %@", point.x, point.y);
 }
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
 	for (UITouch * touch in touches) {
-		NSLog(@"here");
 		CGPoint location = [touch locationInView: [touch view]];
 		location = [[CCDirector sharedDirector] convertToGL: location];
 		
@@ -131,7 +147,7 @@
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	[self decelerateButtonTapEnded];
+	[self accelerateButtonTapEnded];
 }
 
 // on "dealloc" you need to release all your retained objects
