@@ -1,6 +1,6 @@
 
 // When you import this file, you import all the cocos2d classes
-#import "cocos2d.h"
+//#import "ScrollingBackground.h"
 #import "GameCamera.h"
 #import "SpaceLayer.h"
 #import "Speedometer.h"
@@ -19,6 +19,7 @@
 	GameButton * accelerateButton;
 	GameButton * rotateLeftButton;
 	GameButton * rotateRightButton;
+	//ScrollingBackground * background;
 }
 
 @property(nonatomic, readwrite) float acceleration;
@@ -29,7 +30,7 @@
 // returns a Scene that contains the HelloWorld as the only child
 +(id) scene;
 -(void) accelerateButtonTapStarted;
--(void) decelerateButtonTapEnded;
+-(void) accelerateButtonTapEnded;
 -(void) rotateLeftButtonTapped;
 -(void) rotateRightButtonTapped;
 -(void) setupButtons;

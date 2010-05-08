@@ -25,5 +25,7 @@
 -(void) scaleObjectBy:(float)factor;
 -(CGPoint) cameraPosition;
 -(void) setCameraPosition:(CGPoint)cameraPosition;
+-(NSArray*) getSprites;
+
 
 @end

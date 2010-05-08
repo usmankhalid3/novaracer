@@ -33,6 +33,9 @@
 }
 
 -(void) setCameraPosition:(CGPoint)cameraPosition {
+	if (worldPosition.x == 2000) {
+		NSLog(@"world position here");
+	}
 	CGPoint newLocation = worldPosition;
 	newLocation.x = newLocation.x - cameraPosition.x;
 	newLocation.y = newLocation.y - cameraPosition.y;
@@ -41,6 +44,12 @@
 
 -(CGPoint) cameraPosition {
 	return sprite.position;
+}
+
+-(NSArray*) getSprites {
+	NSArray * array = [[NSArray alloc] initWithObjects:sprite, nil];
+	[array autorelease];
+	return array;
 }
 
 @end

@@ -12,11 +12,14 @@
 @interface Speedometer : CCLayer {
 	CCSprite * speedometer;
 	CCSprite * needle;
+	CCSprite * needle2;
 	float needleAngle;
 	float speed;
 }
 
--(void) displaySpeed:(float)force;
+@property(nonatomic, readonly) CCSprite * needle;
+
+-(void) displaySpeed:(float)speed;
 
 
 @end

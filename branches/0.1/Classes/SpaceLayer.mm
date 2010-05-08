@@ -20,25 +20,32 @@
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		[self createWorldOfSize:size];
 	}
+	CGPoint p = [self anchorPoint];
+	//NSLog(@"position : (%f, %f)", p.x, p.y);
 	return self;
 }
 
 -(void) createWorldOfSize:(CGSize)size {
-	CGPoint spaceShipPosition = ccp(size.width/2, size.height/2);
+	CGPoint spaceShipPosition = ccp(1800, 1500); //ccp(size.width/2, size.height/2);
 	CGPoint planetPosition = ccp(100, 300);
 	
 	spaceShip = [[SpaceShip alloc] init];
 	[spaceShip setState:@"spaceShip.png" worldPosition:spaceShipPosition tag:2];
-	[self addChild:[spaceShip sprite]];
+	//[self addChild:[spaceShip sprite]];
+	[self addObject:spaceShip];
 	
 	GameObject * planet = [[GameObject alloc] init];
 	[planet setState:@"earth.png" worldPosition:planetPosition tag:1];		
 	[planet scaleObjectBy:0.15f];
 	[self addObject:planet];
 	
-	[self initPhysicsWorldOfSize:size];
+	[self loadWorld];
 	
-	[self addPhysicsBody:spaceShip];
+	//CheckPoint * barrier = [[CheckPoint alloc] init];
+	//[self addObject:barrier];
+	
+	[self initPhysicsWorldOfSize:size];
+	//[self addPhysicsBody:spaceShip];
 	
 	NSEnumerator * enumerator = [spaceObjects objectEnumerator];
 	GameObject * object;
@@ -52,7 +59,12 @@
 		spaceObjects = [[NSMutableArray alloc] init];
 	}
 	[spaceObjects addObject:object];
-	[self addChild:[object sprite]];	
+	NSArray * sprites = [object getSprites];
+	NSEnumerator * enumerator = [sprites objectEnumerator];
+	CCSprite * sprite = nil;
+	while ((sprite = [enumerator nextObject])) {
+		[self addChild:sprite];
+	}
 }
 
 -(CGPoint) cameraPositionOf:(GameObject*)gameObject {
@@ -68,12 +80,16 @@
 	return CGPointZero;
 }
 
--(void) setCameraPosition:(CGPoint)position {
+-(void) setCameraPosition:(CGPoint)cameraPosition {
 	NSEnumerator * enumerator = [spaceObjects objectEnumerator];
 	GameObject * object;
 	while ((object = [enumerator nextObject])) {
-		[object setCameraPosition:position];
+		[object setCameraPosition:cameraPosition];
 	}
+	/*CGPoint newLocation = worldPosition;
+	newLocation.x = newLocation.x - cameraPosition.x;
+	newLocation.y = newLocation.y - cameraPosition.y;
+	self.position = newLocation;*/
 }
 
 -(void) setDamping:(float)d {
@@ -82,28 +98,32 @@
 }
 
 -(void) addPhysicsBody:(GameObject*)object {
-
-	CCSprite * associatedSprite = [object sprite];
-
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	
-	bodyDef.position.Set(associatedSprite.position.x/PTM_RATIO, associatedSprite.position.y/PTM_RATIO);
-	bodyDef.userData = object;
-	b2Body *body = world->CreateBody(&bodyDef);
-	
-	// Define another box shape for our dynamic body.
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox((associatedSprite.contentSize.width * [object scaledBy])/PTM_RATIO/2, (associatedSprite.contentSize.height * [object scaledBy])/PTM_RATIO/2);//These are mid points for our sprite
-	
-	// Define the dynamic body fixture.
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.isSensor = true; // should set to true when you want to know when objects will collide but without triggering a collision response
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.3f;
-	body->CreateFixture(&fixtureDef);
+	NSArray * sprites = [object getSprites];
+	NSEnumerator * enumerator = [sprites objectEnumerator];
+	CCSprite * associatedSprite = nil;
+	while ((associatedSprite = [enumerator nextObject])) {
+		
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_dynamicBody;
+		
+		bodyDef.position.Set(associatedSprite.position.x/PTM_RATIO, associatedSprite.position.y/PTM_RATIO);
+		bodyDef.userData = object;
+		b2Body *body = world->CreateBody(&bodyDef);
+		
+		// Define another box shape for our dynamic body.
+		b2PolygonShape dynamicBox;
+		dynamicBox.SetAsBox((associatedSprite.contentSize.width * [object scaledBy])/PTM_RATIO/2, (associatedSprite.contentSize.height * [object scaledBy])/PTM_RATIO/2);//These are mid points for our sprite
+		
+		// Define the dynamic body fixture.
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &dynamicBox;
+		fixtureDef.isSensor = true; // should set to true when you want to know when objects will collide but without triggering a collision response
+		fixtureDef.density = 1.0f;
+		fixtureDef.friction = 0.3f;
+		body->CreateFixture(&fixtureDef);		
+	}
 }
+
 
 -(void) draw
 {
@@ -124,9 +144,9 @@
 }
 
 -(void) initPhysicsWorldOfSize:(CGSize)size {
-	b2Vec2 gravity = b2Vec2(0.0f, -10.0f);
-	world = new b2World(gravity, true);
-	world->SetContinuousPhysics(true);
+	b2Vec2 gravity = b2Vec2(0.0f, 0.0f);
+	world = new b2World(gravity, false);
+	//world->SetContinuousPhysics(true);
 	
 	// Debug Draw functions
 	m_debugDraw = new GLESDebugDraw( PTM_RATIO );
@@ -145,16 +165,20 @@
 }
 
 - (void)tick:(ccTime)dt {
-	
+	b2Vec2 b2Position;
     world->Step(dt, 10, 10);
     for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()) {
         if (b->GetUserData() != NULL) {
-            GameObject *object = (GameObject *)b->GetUserData();			
-            b2Vec2 b2Position = b2Vec2([object sprite].position.x/PTM_RATIO,
-                                       [object sprite].position.y/PTM_RATIO);
-            float32 b2Angle = -1 * CC_DEGREES_TO_RADIANS([object sprite].rotation);
-            b->SetTransform(b2Position, b2Angle);
-			//NSLog(@"position: (%f, %f)", b->GetPosition().x, b->GetPosition().y);
+            GameObject *object = (GameObject *)b->GetUserData();
+			CCSprite * sprite = [object sprite];
+			if (sprite.tag!=2) {
+				b2Position = b2Vec2(sprite.position.x/PTM_RATIO, sprite.position.y/PTM_RATIO);
+			}
+			else {
+				b2Position = b2Vec2(b->GetPosition().x, b->GetPosition().y);
+			}
+			float32 b2Angle = -1 * CC_DEGREES_TO_RADIANS(sprite.rotation);
+			b->SetTransform(b2Position, b2Angle);
         }
     }
 	
@@ -192,16 +216,45 @@
 	}
 }
 
--(void) dealloc {
+-(void) loadWorld {
+	NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString * documentsPath = [paths objectAtIndex:0];
+	NSString * finalPath = [documentsPath stringByAppendingPathComponent:@"map.plist"];
 	
+	NSFileManager * fileManager = [NSFileManager defaultManager];
+	if (![fileManager fileExistsAtPath:finalPath] ) {
+		finalPath = [[NSBundle mainBundle] pathForResource:@"map" ofType:@"plist"];
+	}
+	
+	NSDictionary * map = [[NSDictionary dictionaryWithContentsOfFile:finalPath] retain];
+	NSLog(@"data : %@", map);
+	NSArray * keys = [map allKeys];
+	NSString * key;
+	for (key in [keys objectEnumerator]) {
+		NSDictionary * coords = [map objectForKey:key];
+		GameObject * planet = [[GameObject alloc] init];
+		NSString * x = [coords objectForKey:@"x"];
+		NSString * y = [coords objectForKey:@"y"];
+		CGPoint position = CGPointMake([x intValue], [y intValue]);
+		[planet setState:@"earth.png" worldPosition:position tag:1];	
+		[planet scaleObjectBy:0.15f];
+		[self addObject:planet];
+	}
+
+	
+	[map release];
+}
+
+-(void) dealloc {
+
+	if (spaceObjects!=nil) {
+		[spaceObjects dealloc];
+	}
+	[spaceShip dealloc];
 	if (world!=NULL) {
 		delete world;
 	}
 	world = NULL;
-	if (spaceObjects!=nil) {
-		[spaceObjects release];
-	}
-	[spaceShip dealloc];
 	[super dealloc];
 }
 
