@@ -5,6 +5,7 @@
 #import "SpaceLayer.h"
 #import "Speedometer.h"
 #import "GameButton.h"
+#import "ScoreLabel.h"
 
 // HelloWorld Layer
 @interface GameLayer : CCLayer
@@ -19,6 +20,7 @@
 	GameButton * accelerateButton;
 	GameButton * rotateLeftButton;
 	GameButton * rotateRightButton;
+	ScoreLabel * scoreLabel;
 	//ScrollingBackground * background;
 }
 
@@ -37,5 +39,6 @@
 -(void) setupCameraWithSize:(CGSize)size;
 -(void) setupBackground;
 -(void) setupSpeedometer;
+-(void) setupScoreLabel;
 
 @end
