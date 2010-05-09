@@ -35,6 +35,16 @@
 	
 }
 
+-(void) setupScoreLabel {
+	scoreLabel = [[ScoreLabel alloc] init];
+	NSArray * content = [scoreLabel getContent];
+	NSEnumerator * enumerator = [content objectEnumerator];
+	CCNode * node;
+	while ((node = [enumerator nextObject])) {
+		[self addChild:node];
+	}	
+}
+
 -(void) setupSpeedometer {
 	speedometer = [Speedometer node];
 	[self addChild:speedometer z:3];	
@@ -95,6 +105,7 @@
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		
 		[self setupBackground];
+		[self setupScoreLabel];
 		[self setupSpeedometer];
 		[self setupButtons];
 		[self setupCameraWithSize:size];
@@ -108,11 +119,17 @@
 }
 
 -(void) tick:(float) dt {
+	if ([[spaceLayer spaceShip] capturedFlag]==YES) {
+		[[spaceLayer spaceShip] setCapturedFlag:NO];
+		[scoreLabel updateScore:[[spaceLayer spaceShip] flagsScored]];
+	}
 	float force = 0.0f;
 	if (accelerateShip == YES) {
 		force = acceleration * dt;
 	}
-	
+	if ([[spaceLayer spaceShip] collided] == YES) {
+		accelerateShip = NO;
+	}
 	/*CGPoint texOffset = background.texOffset;
 	texOffset.y = texOffset.y - (50*dt);
 	texOffset.x = texOffset.x - (50*dt);

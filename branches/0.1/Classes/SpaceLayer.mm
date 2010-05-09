@@ -14,6 +14,12 @@
 
 @synthesize spaceShip, damping;
 
+typedef enum objectTypes {
+	kSpaceShip = 1,
+	kPlanet,
+	kFlag
+} SpaceObjectType;
+
 -(id) init {
 
 	if ((self = [super init])) {
@@ -26,26 +32,22 @@
 }
 
 -(void) createWorldOfSize:(CGSize)size {
-	CGPoint spaceShipPosition = ccp(1800, 1500); //ccp(size.width/2, size.height/2);
+	CGPoint spaceShipPosition = ccp(1500, 300);//ccp(size.width/2, size.height/2);
 	CGPoint planetPosition = ccp(100, 300);
 	
 	spaceShip = [[SpaceShip alloc] init];
-	[spaceShip setState:@"spaceShip.png" worldPosition:spaceShipPosition tag:2];
+	[spaceShip setState:@"spaceShip.png" worldPosition:spaceShipPosition tag:kSpaceShip];
 	//[self addChild:[spaceShip sprite]];
 	[self addObject:spaceShip];
 	
-	GameObject * planet = [[GameObject alloc] init];
-	[planet setState:@"earth.png" worldPosition:planetPosition tag:1];		
+	/*GameObject * planet = [[GameObject alloc] init];
+	[planet setState:@"red-flag.png" worldPosition:planetPosition tag:kFlag];		
 	[planet scaleObjectBy:0.15f];
-	[self addObject:planet];
+	[self addObject:planet];*/
 	
 	[self loadWorld];
 	
-	//CheckPoint * barrier = [[CheckPoint alloc] init];
-	//[self addObject:barrier];
-	
 	[self initPhysicsWorldOfSize:size];
-	//[self addPhysicsBody:spaceShip];
 	
 	NSEnumerator * enumerator = [spaceObjects objectEnumerator];
 	GameObject * object;
@@ -171,7 +173,7 @@
         if (b->GetUserData() != NULL) {
             GameObject *object = (GameObject *)b->GetUserData();
 			CCSprite * sprite = [object sprite];
-			if (sprite.tag!=2) {
+			if (sprite.tag!=kSpaceShip) {
 				b2Position = b2Vec2(sprite.position.x/PTM_RATIO, sprite.position.y/PTM_RATIO);
 			}
 			else {
@@ -196,11 +198,17 @@
 			CCSprite *spriteA = [objA sprite];
 			CCSprite *spriteB = [objB sprite];
 			
-			if (spriteA.tag == 1 && spriteB.tag == 2) {
+			if (spriteA.tag == kFlag && spriteB.tag == kSpaceShip) {
 				toDestroy.push_back(bodyA);
-			} else if (spriteA.tag == 2 && spriteB.tag == 1) {
+				[objB captureFlag];
+			} else if (spriteA.tag == kSpaceShip && spriteB.tag == kFlag) {
 				toDestroy.push_back(bodyB);
-			} 
+				[objA captureFlag];
+			}
+			
+			if (spriteA.tag == kSpaceShip && spriteB.tag == kPlanet) {
+				[objA setCollided:YES];
+			}
 		}        
 	}
 	
@@ -232,13 +240,20 @@
 	NSString * key;
 	for (key in [keys objectEnumerator]) {
 		NSDictionary * coords = [map objectForKey:key];
-		GameObject * planet = [[GameObject alloc] init];
+		GameObject * gameObject = [[GameObject alloc] init];
 		NSString * x = [coords objectForKey:@"x"];
 		NSString * y = [coords objectForKey:@"y"];
 		CGPoint position = CGPointMake([x intValue], [y intValue]);
-		[planet setState:@"earth.png" worldPosition:position tag:1];	
-		[planet scaleObjectBy:0.15f];
-		[self addObject:planet];
+		NSString * planet = @"planet";
+		if ([planet isEqualToString:[coords objectForKey:@"type"]]) {
+			[gameObject setState:@"earth.png" worldPosition:position tag:kPlanet];	
+			[gameObject scaleObjectBy:0.15f];
+		}
+		else {
+			[gameObject setState:@"red-flag.png" worldPosition:position tag:kFlag];	
+			[gameObject scaleObjectBy:0.15f];
+		}
+		[self addObject:gameObject];
 	}
 
 	

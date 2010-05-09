@@ -276,7 +276,9 @@
 		C28BAD461191C13000F93D03 /* top.png in Resources */ = {isa = PBXBuildFile; fileRef = C28BAD431191C13000F93D03 /* top.png */; };
 		C28D574B1193D7C100422554 /* ScrollingBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D574A1193D7C100422554 /* ScrollingBackground.m */; };
 		C28D58CF1193F24C00422554 /* gate.png in Resources */ = {isa = PBXBuildFile; fileRef = C28D58CE1193F24C00422554 /* gate.png */; };
-		C28D58D21193F26700422554 /* CheckPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D58D11193F26700422554 /* CheckPoint.m */; };
+		C28FA1D11196C9BB00A89C9F /* red-flag.png in Resources */ = {isa = PBXBuildFile; fileRef = C28FA1D01196C9BB00A89C9F /* red-flag.png */; };
+		C28FA27E1196D28500A89C9F /* ScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C28FA27D1196D28500A89C9F /* ScoreLabel.m */; };
+		C28FA3111196D90800A89C9F /* SpaceLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C28FA3101196D90800A89C9F /* SpaceLayer.mm */; };
 		C2A9CFF1118D79BE006287F7 /* ButtonStar.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9CFE9118D79BE006287F7 /* ButtonStar.png */; };
 		C2A9CFF2118D79BE006287F7 /* ButtonStarSel.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9CFEA118D79BE006287F7 /* ButtonStarSel.png */; };
 		C2A9CFF3118D79BE006287F7 /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9CFEB118D79BE006287F7 /* earth.png */; };
@@ -287,7 +289,6 @@
 		C2A9CFF8118D79BE006287F7 /* speedometer1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C2A9CFF0118D79BE006287F7 /* speedometer1.jpg */; };
 		C2A9D06D118D81FA006287F7 /* GameCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2A9D062118D81FA006287F7 /* GameCamera.mm */; };
 		C2A9D06F118D81FA006287F7 /* GameObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2A9D066118D81FA006287F7 /* GameObject.mm */; };
-		C2A9D070118D81FA006287F7 /* SpaceLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2A9D068118D81FA006287F7 /* SpaceLayer.mm */; };
 		C2A9D071118D81FA006287F7 /* SpaceShip.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2A9D06A118D81FA006287F7 /* SpaceShip.mm */; };
 		C2A9D072118D81FA006287F7 /* Speedometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2A9D06C118D81FA006287F7 /* Speedometer.mm */; };
 		C2AF304C11956D0600F6367A /* map.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2AF304B11956D0600F6367A /* map.plist */; };
@@ -585,8 +586,10 @@
 		C28D57491193D7C100422554 /* ScrollingBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollingBackground.h; sourceTree = "<group>"; };
 		C28D574A1193D7C100422554 /* ScrollingBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollingBackground.m; sourceTree = "<group>"; };
 		C28D58CE1193F24C00422554 /* gate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gate.png; sourceTree = "<group>"; };
-		C28D58D01193F26700422554 /* CheckPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckPoint.h; sourceTree = "<group>"; };
-		C28D58D11193F26700422554 /* CheckPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckPoint.m; sourceTree = "<group>"; };
+		C28FA1D01196C9BB00A89C9F /* red-flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-flag.png"; sourceTree = "<group>"; };
+		C28FA27C1196D28500A89C9F /* ScoreLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreLabel.h; sourceTree = "<group>"; };
+		C28FA27D1196D28500A89C9F /* ScoreLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreLabel.m; sourceTree = "<group>"; };
+		C28FA3101196D90800A89C9F /* SpaceLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SpaceLayer.mm; sourceTree = "<group>"; };
 		C2A9CFE9118D79BE006287F7 /* ButtonStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonStar.png; sourceTree = "<group>"; };
 		C2A9CFEA118D79BE006287F7 /* ButtonStarSel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonStarSel.png; sourceTree = "<group>"; };
 		C2A9CFEB118D79BE006287F7 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
@@ -601,7 +604,6 @@
 		C2A9D065118D81FA006287F7 /* GameObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObject.h; sourceTree = "<group>"; };
 		C2A9D066118D81FA006287F7 /* GameObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameObject.mm; sourceTree = "<group>"; };
 		C2A9D067118D81FA006287F7 /* SpaceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceLayer.h; sourceTree = "<group>"; };
-		C2A9D068118D81FA006287F7 /* SpaceLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SpaceLayer.mm; sourceTree = "<group>"; };
 		C2A9D069118D81FA006287F7 /* SpaceShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceShip.h; sourceTree = "<group>"; };
 		C2A9D06A118D81FA006287F7 /* SpaceShip.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SpaceShip.mm; sourceTree = "<group>"; };
 		C2A9D06B118D81FA006287F7 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
@@ -717,7 +719,7 @@
 				C2A9D065118D81FA006287F7 /* GameObject.h */,
 				C2A9D066118D81FA006287F7 /* GameObject.mm */,
 				C2A9D067118D81FA006287F7 /* SpaceLayer.h */,
-				C2A9D068118D81FA006287F7 /* SpaceLayer.mm */,
+				C28FA3101196D90800A89C9F /* SpaceLayer.mm */,
 				C2A9D069118D81FA006287F7 /* SpaceShip.h */,
 				C2A9D06A118D81FA006287F7 /* SpaceShip.mm */,
 				C2A9D06B118D81FA006287F7 /* Speedometer.h */,
@@ -730,8 +732,8 @@
 				1F3B9A2B0EF2145700286867 /* NovaRacerBox2dAppDelegate.mm */,
 				C28D57491193D7C100422554 /* ScrollingBackground.h */,
 				C28D574A1193D7C100422554 /* ScrollingBackground.m */,
-				C28D58D01193F26700422554 /* CheckPoint.h */,
-				C28D58D11193F26700422554 /* CheckPoint.m */,
+				C28FA27C1196D28500A89C9F /* ScoreLabel.h */,
+				C28FA27D1196D28500A89C9F /* ScoreLabel.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1117,6 +1119,7 @@
 		50F4144210692EE7002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C28FA1D01196C9BB00A89C9F /* red-flag.png */,
 				C2AF304B11956D0600F6367A /* map.plist */,
 				C28D58CE1193F24C00422554 /* gate.png */,
 				C28BAD411191C13000F93D03 /* left.png */,
@@ -1356,6 +1359,7 @@
 				C28BAD461191C13000F93D03 /* top.png in Resources */,
 				C28D58CF1193F24C00422554 /* gate.png in Resources */,
 				C2AF304C11956D0600F6367A /* map.plist in Resources */,
+				C28FA1D11196C9BB00A89C9F /* red-flag.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1372,14 +1376,14 @@
 				50F4143910692D7D002A0D5E /* GLES-Render.mm in Sources */,
 				C2A9D06D118D81FA006287F7 /* GameCamera.mm in Sources */,
 				C2A9D06F118D81FA006287F7 /* GameObject.mm in Sources */,
-				C2A9D070118D81FA006287F7 /* SpaceLayer.mm in Sources */,
 				C2A9D071118D81FA006287F7 /* SpaceShip.mm in Sources */,
 				C2A9D072118D81FA006287F7 /* Speedometer.mm in Sources */,
 				C2F5950A118D96AD007C586B /* ContactListener.mm in Sources */,
 				C28BAD201191C0CC00F93D03 /* GameButton.mm in Sources */,
 				C28D574B1193D7C100422554 /* ScrollingBackground.m in Sources */,
-				C28D58D21193F26700422554 /* CheckPoint.m in Sources */,
 				C2BD6F9A119575F800ED8E6C /* GameLayer.mm in Sources */,
+				C28FA27E1196D28500A89C9F /* ScoreLabel.m in Sources */,
+				C28FA3111196D90800A89C9F /* SpaceLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,14 +10,33 @@
 
 
 @implementation SpaceShip
-@synthesize currentVelocity, dampingPercentage, currentRotation;
+@synthesize currentVelocity, dampingPercentage, currentRotation, collided, flagsScored, capturedFlag;
 
 -(void) accelerateShipBy:(float) force {
 	currentVelocity.x = (currentVelocity.x + (force * cos(CC_DEGREES_TO_RADIANS(currentRotation+90.0f))))*(1.0f - dampingPercentage);
 	currentVelocity.y = (currentVelocity.y + (force * sin(CC_DEGREES_TO_RADIANS(currentRotation+90.0f))))*(1.0f - dampingPercentage);
-	worldPosition.x = worldPosition.x + currentVelocity.x;
-	worldPosition.y = worldPosition.y + currentVelocity.y;
-	//sprite.position = worldPosition;
+	if (collided == YES) {
+		worldPosition.x = worldPosition.x - currentVelocity.x;
+		worldPosition.y = worldPosition.y - currentVelocity.y;
+	}
+	else {
+		worldPosition.x = worldPosition.x + currentVelocity.x;
+		worldPosition.y = worldPosition.y + currentVelocity.y;
+	}
+	if (collided == YES && [self speed] <= 0.05f) {
+		collided = NO;
+		[self haultShip];
+	}
+}
+
+-(void) haultShip {
+	currentVelocity.x = 0;
+	currentVelocity.y = 0;
+}
+
+-(void) captureFlag {
+	flagsScored += 1;
+	capturedFlag = YES;
 }
 
 -(CGPoint) calculateNewPosition:(CGPoint) point angleInRadians:(float)angle {
