@@ -2,7 +2,7 @@
 //  ScrollingBackground.h
 //  NovaRacerBox2d
 //
-//  Created by adeel on 5/7/10.
+//  Created by Usman Khalid on 5/7/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 

@@ -58,18 +58,20 @@
 	accelerateShip = NO;
 }
 
-- (void)rotateLeftButtonTapped{
-    float angleDegrees = [[spaceLayer spaceShip] currentRotation] + rotationAngle;
-    float cocosAngle = -1 * angleDegrees;
-    [[[spaceLayer spaceShip] sprite] runAction:[CCSequence actions: [CCRotateTo actionWithDuration:0.2f angle:cocosAngle], nil]];
-	[[spaceLayer spaceShip] setCurrentRotation:angleDegrees];
+- (void)rotateLeftButtonTapStarted{
+	rotateShip = 1;
 }
 
-- (void)rotateRightButtonTapped {
-    float angleDegrees = [[spaceLayer spaceShip] currentRotation] - rotationAngle;
-    float cocosAngle = -1 * angleDegrees;
-    [[[spaceLayer spaceShip] sprite] runAction:[CCSequence actions: [CCRotateTo actionWithDuration:0.2f angle:cocosAngle], nil]];
-	[[spaceLayer spaceShip] setCurrentRotation:angleDegrees];
+-(void) rotateLeftButtonTapEnded {
+	rotateShip = 0;
+}
+
+- (void) rotateRightButtonTapStarted {
+	rotateShip = -1;
+}
+
+-(void) rotateRightButtonTapEnded {
+	rotateShip = 0;
 }
 
 -(void) setupButtons {
@@ -104,7 +106,10 @@
 		[self setupButtons];
 		spaceLayer = [SpaceLayer node];
 		[spaceLayer setDamping:damping];
+		[[spaceLayer spaceShip] setCurrentRotation:-90];
 		[self addChild:spaceLayer z:2];
+		MiniMap * mm = [MiniMap node];
+		[self addChild:mm z:2];
 		[self schedule:@selector(tick:)];
 		
 	}
@@ -119,6 +124,9 @@
 	float force = 0.0f;
 	if (accelerateShip == YES) {
 		force = acceleration * dt;
+	}
+	if (rotateShip!=0) {
+		[[spaceLayer spaceShip] setCurrentRotation:rotateShip]; 
 	}
 	if ([[spaceLayer spaceShip] collided] == YES) {
 		accelerateShip = NO;
@@ -141,19 +149,20 @@
 		
 		if (CGRectContainsPoint([accelerateButton buttonRect], location)) {
 			[self accelerateButtonTapStarted];
-			//[accelerateButton tapStarted];
 		}
 		else if (CGRectContainsPoint([rotateLeftButton buttonRect], location)) {
-			[self rotateLeftButtonTapped];
+			[self rotateLeftButtonTapStarted];
 		}
 		else if (CGRectContainsPoint([rotateRightButton buttonRect], location)) {
-			[self rotateRightButtonTapped];
+			[self rotateRightButtonTapStarted];
 		}
 	}
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	[self accelerateButtonTapEnded];
+	[self rotateRightButtonTapEnded];
+	[self rotateLeftButtonTapEnded];
 }
 
 // on "dealloc" you need to release all your retained objects

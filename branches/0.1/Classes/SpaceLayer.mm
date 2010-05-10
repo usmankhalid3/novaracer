@@ -2,7 +2,7 @@
 //  SpaceLayer.m
 //  NovaRacer
 //
-//  Created by adeel on 5/1/10.
+//  Created by Usman Khalid on 5/1/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
@@ -45,9 +45,10 @@ typedef enum objectTypes {
 }
 
 -(void) createWorldOfSize:(CGSize)size {
-	//CGPoint spaceShipPosition = ccp(size.width/2, size.height/2);
-	CGPoint spaceShipPosition = ccp(1500, 400);
-	CGPoint planetPosition = ccp(100, 300);
+	CGPoint spaceShipPosition = ccp(size.width/2, size.height/2);
+	//CGPoint spaceShipPosition = ccp(1500, 400);
+	CGPoint planetPosition = ccp(100, 250);
+	CGPoint flagPosition = ccp(100, 300);
 	
 	spaceShip = [[SpaceShip alloc] init]; 
 	[spaceShip setState:@"spaceship.png" worldPosition:spaceShipPosition tag:kSpaceShip];
@@ -58,6 +59,11 @@ typedef enum objectTypes {
 	[planet setState:@"earth.png" worldPosition:planetPosition tag:kPlanet];		
 	[planet scaleObjectBy:0.15f];
 	[self addObject:planet];
+	
+	GameObject * flag = [[GameObject alloc] init];
+	[flag setState:@"red-flag.png" worldPosition:flagPosition tag:kFlag];		
+	[flag scaleObjectBy:0.15f];
+	[self addObject:flag];
 	
 	[self loadWorld];
 }
@@ -166,7 +172,6 @@ typedef enum objectTypes {
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	
 }
 
 -(void) initPhysicsWorldOfSize:(CGSize)size {
