@@ -2,7 +2,7 @@
 //  GameButton.m
 //  NovaRacerBox2d
 //
-//  Created by adeel on 5/5/10.
+//  Created by Usman Khalid on 5/5/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 

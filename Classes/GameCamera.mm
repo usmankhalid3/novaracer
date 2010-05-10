@@ -2,7 +2,7 @@
 //  GameCamera.m
 //  NovaRacer
 //
-//  Created by adeel on 4/29/10.
+//  Created by Usman Khalid on 4/29/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 

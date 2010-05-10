@@ -2,7 +2,7 @@
 //  SpaceShip.m
 //  NovaRacer
 //
-//  Created by adeel on 4/29/10.
+//  Created by Usman Khalid on 4/29/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,8 +13,8 @@
 @synthesize currentVelocity, dampingPercentage, currentRotation, collided, flagsScored, capturedFlag;
 
 -(void) accelerateShipBy:(float) force {
-	currentVelocity.x = (currentVelocity.x + (force * cos(CC_DEGREES_TO_RADIANS(currentRotation+90.0f))))*(1.0f - dampingPercentage);
-	currentVelocity.y = (currentVelocity.y + (force * sin(CC_DEGREES_TO_RADIANS(currentRotation+90.0f))))*(1.0f - dampingPercentage);
+	currentVelocity.x = (currentVelocity.x + (force * cos(CC_DEGREES_TO_RADIANS(currentRotation))))*(1.0f - dampingPercentage);
+	currentVelocity.y = (currentVelocity.y + (force * sin(CC_DEGREES_TO_RADIANS(currentRotation))))*(1.0f - dampingPercentage);
 	if (collided == YES) {
 		[self moveShipBackward];
 	}
@@ -29,25 +29,25 @@
 
 -(void) moveShipForward {
 	CGPoint point = sprite.position;
-	point.x = point.x + currentVelocity.x;
-	point.y = point.y + currentVelocity.y;
+	point.x = point.x - currentVelocity.x;
+	point.y = point.y - currentVelocity.y;
 	[sprite setPosition:point];
 	
 	point = worldPosition;
-	point.x = point.x + currentVelocity.x;
-	point.y = point.y + currentVelocity.y;
+	point.x = point.x - currentVelocity.x;
+	point.y = point.y - currentVelocity.y;
 	worldPosition = point;
 }
 
 -(void) moveShipBackward {
 	CGPoint point = sprite.position;
-	point.x = point.x - currentVelocity.x;
-	point.y = point.y - currentVelocity.y;
+	point.x = point.x + currentVelocity.x;
+	point.y = point.y + currentVelocity.y;
 	[sprite setPosition:point];
 	
 	point = worldPosition;
-	point.x = point.x - currentVelocity.x;
-	point.y = point.y - currentVelocity.y;
+	point.x = point.x + currentVelocity.x;
+	point.y = point.y + currentVelocity.y;
 	worldPosition = point;
 }
 
@@ -69,7 +69,9 @@
 }
 
 -(void) setCurrentRotation:(float)newAngle {
-	currentRotation = (float)((int)newAngle % 360);
+	currentRotation = (float)((int)(currentRotation + newAngle) % 360);
+	NSLog(@"new angle: %f", currentRotation);
+	[sprite setRotation:currentRotation*-1];
 }
 
 -(float) speed {

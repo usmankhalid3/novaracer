@@ -4,11 +4,13 @@
 #import "Speedometer.h"
 #import "GameButton.h"
 #import "ScoreLabel.h"
+#import "MiniMap.h"
 
 // HelloWorld Layer
 @interface GameLayer : CCLayer
 {
 	BOOL accelerateShip;
+	int rotateShip;
 	SpaceLayer * spaceLayer;
 	Speedometer * speedometer;
 	float acceleration;	// in meters per second
@@ -30,8 +32,10 @@
 +(id) scene;
 -(void) accelerateButtonTapStarted;
 -(void) accelerateButtonTapEnded;
--(void) rotateLeftButtonTapped;
--(void) rotateRightButtonTapped;
+-(void) rotateLeftButtonTapStarted;
+-(void) rotateLeftButtonTapEnded;
+-(void) rotateRightButtonTapStarted;
+-(void) rotateRightButtonTapEnded;
 -(void) setupButtons;
 -(void) setupBackground;
 -(void) setupSpeedometer;
