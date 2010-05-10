@@ -12,10 +12,9 @@
 @synthesize anchorPoint, cameraSize;
 
 -(CGPoint) worldToCameraPosition:(CGPoint) worldPosition {
-	CGPoint cameraPosition = worldPosition;
-	cameraPosition.x = cameraPosition.x - anchorPoint.x;
-	cameraPosition.y = cameraPosition.y - anchorPoint.y;
-	return cameraPosition;
+	worldPosition.x = worldPosition.x - anchorPoint.x;
+	worldPosition.y = worldPosition.y - anchorPoint.y;
+	return worldPosition;
 }
 
 -(void) updateCamera:(CGPoint) shipPosition {

@@ -19,7 +19,7 @@
 		[flagImage setPosition:CGPointMake(32, 300)];
 		[flagImage setScale:0.15f];
 		label = [CCLabel labelWithString:[NSString stringWithFormat:@"%i", score] fontName:@"Arial" fontSize:20];
-		[label setPosition:CGPointMake(50, 300)];
+		[label setPosition:CGPointMake(54, 300)];
 	}
 	return self;
 }

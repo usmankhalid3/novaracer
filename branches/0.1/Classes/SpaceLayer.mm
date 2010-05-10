@@ -24,28 +24,45 @@ typedef enum objectTypes {
 
 	if ((self = [super init])) {
 		CGSize size = [[CCDirector sharedDirector] winSize];
+		[self setupCameraOfSize:size];
 		[self createWorldOfSize:size];
+		//[camera updateCamera:[spaceShip worldPosition]];
+		[self updateCamera];
+		[self createPhysicsWorldOfSize:size];
 	}
-	CGPoint p = [self anchorPoint];
-	//NSLog(@"position : (%f, %f)", p.x, p.y);
 	return self;
 }
 
+-(void) updateCamera {
+	[camera updateCamera: [spaceShip worldPosition]];
+	[self setCameraPosition:[camera anchorPoint]];
+}
+
+-(void)setupCameraOfSize:(CGSize) size {
+	camera = [[GameCamera alloc] init];
+	[camera setAnchorPoint:CGPointZero];
+	[camera setCameraSize:size];
+}
+
 -(void) createWorldOfSize:(CGSize)size {
-	CGPoint spaceShipPosition = ccp(1500, 300);//ccp(size.width/2, size.height/2);
+	//CGPoint spaceShipPosition = ccp(size.width/2, size.height/2);
+	CGPoint spaceShipPosition = ccp(1500, 400);
 	CGPoint planetPosition = ccp(100, 300);
 	
-	spaceShip = [[SpaceShip alloc] init];
-	[spaceShip setState:@"spaceShip.png" worldPosition:spaceShipPosition tag:kSpaceShip];
-	//[self addChild:[spaceShip sprite]];
+	spaceShip = [[SpaceShip alloc] init]; 
+	[spaceShip setState:@"spaceship.png" worldPosition:spaceShipPosition tag:kSpaceShip];
+	[spaceShip scaleObjectBy:0.5f];
 	[self addObject:spaceShip];
 	
-	/*GameObject * planet = [[GameObject alloc] init];
-	[planet setState:@"red-flag.png" worldPosition:planetPosition tag:kFlag];		
+	GameObject * planet = [[GameObject alloc] init];
+	[planet setState:@"earth.png" worldPosition:planetPosition tag:kPlanet];		
 	[planet scaleObjectBy:0.15f];
-	[self addObject:planet];*/
+	[self addObject:planet];
 	
 	[self loadWorld];
+}
+
+-(void) createPhysicsWorldOfSize:(CGSize)size {
 	
 	[self initPhysicsWorldOfSize:size];
 	
@@ -53,7 +70,7 @@ typedef enum objectTypes {
 	GameObject * object;
 	while ((object = [enumerator nextObject])) {
 		[self addPhysicsBody:object];
-	}
+	}	
 }
 
 -(void) addObject:(GameObject*)object {
@@ -61,25 +78,7 @@ typedef enum objectTypes {
 		spaceObjects = [[NSMutableArray alloc] init];
 	}
 	[spaceObjects addObject:object];
-	NSArray * sprites = [object getSprites];
-	NSEnumerator * enumerator = [sprites objectEnumerator];
-	CCSprite * sprite = nil;
-	while ((sprite = [enumerator nextObject])) {
-		[self addChild:sprite];
-	}
-}
-
--(CGPoint) cameraPositionOf:(GameObject*)gameObject {
-	NSEnumerator * enumerator = [spaceObjects objectEnumerator];
-	GameObject * object;
-	while ((object = [enumerator nextObject])) {
-		CCSprite * sprite1 = [object sprite];
-		CCSprite * sprite2 = [gameObject sprite];
-		if (sprite1 == sprite2) {
-			return [object cameraPosition];
-		}
-	}
-	return CGPointZero;
+	[self addChild:[object sprite] z:4];
 }
 
 -(void) setCameraPosition:(CGPoint)cameraPosition {
@@ -88,10 +87,6 @@ typedef enum objectTypes {
 	while ((object = [enumerator nextObject])) {
 		[object setCameraPosition:cameraPosition];
 	}
-	/*CGPoint newLocation = worldPosition;
-	newLocation.x = newLocation.x - cameraPosition.x;
-	newLocation.y = newLocation.y - cameraPosition.y;
-	self.position = newLocation;*/
 }
 
 -(void) setDamping:(float)d {
@@ -100,30 +95,59 @@ typedef enum objectTypes {
 }
 
 -(void) addPhysicsBody:(GameObject*)object {
-	NSArray * sprites = [object getSprites];
-	NSEnumerator * enumerator = [sprites objectEnumerator];
-	CCSprite * associatedSprite = nil;
-	while ((associatedSprite = [enumerator nextObject])) {
-		
-		b2BodyDef bodyDef;
-		bodyDef.type = b2_dynamicBody;
-		
-		bodyDef.position.Set(associatedSprite.position.x/PTM_RATIO, associatedSprite.position.y/PTM_RATIO);
-		bodyDef.userData = object;
-		b2Body *body = world->CreateBody(&bodyDef);
-		
-		// Define another box shape for our dynamic body.
-		b2PolygonShape dynamicBox;
-		dynamicBox.SetAsBox((associatedSprite.contentSize.width * [object scaledBy])/PTM_RATIO/2, (associatedSprite.contentSize.height * [object scaledBy])/PTM_RATIO/2);//These are mid points for our sprite
-		
-		// Define the dynamic body fixture.
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &dynamicBox;
-		fixtureDef.isSensor = true; // should set to true when you want to know when objects will collide but without triggering a collision response
-		fixtureDef.density = 1.0f;
-		fixtureDef.friction = 0.3f;
-		body->CreateFixture(&fixtureDef);		
+	CCSprite * associatedSprite = [object sprite];
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	CGPoint position = [camera worldToCameraPosition:[object worldPosition]];
+	bodyDef.position.Set(position.x/PTM_RATIO, position.y/PTM_RATIO);
+	bodyDef.userData = object;
+	b2Body *body = world->CreateBody(&bodyDef);
+	
+	// Define another box shape for our dynamic body.
+	b2PolygonShape dynamicBox;
+	float objectScale = [object scaledBy];
+	if (associatedSprite.tag == kSpaceShip) {
+		int num = 6;
+		b2Vec2 verts[] = {
+			b2Vec2(-3.0f * objectScale / PTM_RATIO, 78.0f * objectScale / PTM_RATIO),
+			b2Vec2(-64.0f * objectScale / PTM_RATIO, -16.0f * objectScale / PTM_RATIO),
+			b2Vec2(-64.0f * objectScale / PTM_RATIO, -76.0f * objectScale / PTM_RATIO),
+			b2Vec2(57.0f * objectScale / PTM_RATIO, -75.0f * objectScale / PTM_RATIO),
+			b2Vec2(57.0f * objectScale / PTM_RATIO, -14.0f * objectScale / PTM_RATIO),
+			b2Vec2(-3.0f * objectScale / PTM_RATIO, 76.0f * objectScale / PTM_RATIO)
+		};
+		dynamicBox.Set(verts, num);
 	}
+	else if (associatedSprite.tag == kPlanet) {
+		int num = 7;
+		b2Vec2 verts[] = {
+			b2Vec2(1.0f * objectScale  / PTM_RATIO, 158.6f * objectScale / PTM_RATIO),
+			b2Vec2(-147.7f * objectScale / PTM_RATIO, 117.0f * objectScale / PTM_RATIO),
+			b2Vec2(-152.9f * objectScale / PTM_RATIO, -104.5f * objectScale / PTM_RATIO),
+			b2Vec2(10.4f * objectScale / PTM_RATIO, -178.4f * objectScale / PTM_RATIO),
+			b2Vec2(158.1f * objectScale  / PTM_RATIO, -88.9f * objectScale / PTM_RATIO),
+			b2Vec2(157.0f * objectScale / PTM_RATIO, 84.8f * objectScale / PTM_RATIO),
+			b2Vec2(3.1f * objectScale / PTM_RATIO, 159.6f * objectScale / PTM_RATIO)
+		};
+		dynamicBox.Set(verts, num);
+	}
+	else if (associatedSprite.tag == kFlag) {
+		int num = 4;
+		b2Vec2 verts[] = {
+			b2Vec2(-66.5f * objectScale / PTM_RATIO, 73.5f * objectScale / PTM_RATIO),
+			b2Vec2(-65.5f * objectScale / PTM_RATIO, -71.5f * objectScale / PTM_RATIO),
+			b2Vec2(68.5f * objectScale / PTM_RATIO, 15.5f * objectScale / PTM_RATIO),
+			b2Vec2(-65.5f * objectScale / PTM_RATIO, 70.5f * objectScale / PTM_RATIO)
+		};
+		dynamicBox.Set(verts, num);
+	}
+	// Define the dynamic body fixture.
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.isSensor = true; // should set to true when you want to know when objects will collide but without triggering a collision response
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
+	body->CreateFixture(&fixtureDef);		
 }
 
 
@@ -155,7 +179,7 @@ typedef enum objectTypes {
 	world->SetDebugDraw(m_debugDraw);
 	
 	uint32 flags = 0;
-	flags += b2DebugDraw::e_shapeBit;
+	//flags += b2DebugDraw::e_shapeBit;
 	//		flags += b2DebugDraw::e_jointBit;
 	//		flags += b2DebugDraw::e_aabbBit;
 	//		flags += b2DebugDraw::e_pairBit;
@@ -167,16 +191,20 @@ typedef enum objectTypes {
 }
 
 - (void)tick:(ccTime)dt {
+	
+	[self updateCamera];
+	
 	b2Vec2 b2Position;
     world->Step(dt, 10, 10);
     for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()) {
         if (b->GetUserData() != NULL) {
             GameObject *object = (GameObject *)b->GetUserData();
 			CCSprite * sprite = [object sprite];
-			if (sprite.tag!=kSpaceShip) {
-				b2Position = b2Vec2(sprite.position.x/PTM_RATIO, sprite.position.y/PTM_RATIO);
-			}
-			else {
+			CGPoint position = [camera worldToCameraPosition:[object worldPosition]];
+			//if (sprite.tag!=kSpaceShip) {
+				b2Position = b2Vec2(position.x/PTM_RATIO, position.y/PTM_RATIO);
+			//}
+			if (sprite.tag==kSpaceShip) {
 				b2Position = b2Vec2(b->GetPosition().x, b->GetPosition().y);
 			}
 			float32 b2Angle = -1 * CC_DEGREES_TO_RADIANS(sprite.rotation);
@@ -270,6 +298,7 @@ typedef enum objectTypes {
 		delete world;
 	}
 	world = NULL;
+	[camera dealloc];
 	[super dealloc];
 }
 
