@@ -1,7 +1,5 @@
 
-// When you import this file, you import all the cocos2d classes
 //#import "ScrollingBackground.h"
-#import "GameCamera.h"
 #import "SpaceLayer.h"
 #import "Speedometer.h"
 #import "GameButton.h"
@@ -11,7 +9,6 @@
 @interface GameLayer : CCLayer
 {
 	BOOL accelerateShip;
-	GameCamera * camera;
 	SpaceLayer * spaceLayer;
 	Speedometer * speedometer;
 	float acceleration;	// in meters per second
@@ -36,7 +33,6 @@
 -(void) rotateLeftButtonTapped;
 -(void) rotateRightButtonTapped;
 -(void) setupButtons;
--(void) setupCameraWithSize:(CGSize)size;
 -(void) setupBackground;
 -(void) setupSpeedometer;
 -(void) setupScoreLabel;

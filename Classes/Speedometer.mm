@@ -16,14 +16,14 @@
 -(id) init {
 	
 	if ((self = [super init])) {
-		speedometer = [CCSprite spriteWithFile:@"speedometer1.jpg"];
+		speedometer = [CCSprite spriteWithFile:@"speedometer.png"];
 		speedometer.position = ccp(20, 20);
 		speedometer.anchorPoint = ccp(0, 0);
-		speedometer.scale = 0.20f;
+		speedometer.scale = 0.8f;
 		[self addChild:speedometer];
 		
 		needle = [CCSprite spriteWithFile:@"needle.png"];
-		needle.position = ccp(70, 68);
+		needle.position = ccp(66, 63);
 		needle.anchorPoint = ccp(0, 0);
 		needle.scale = 0.20f;
 		[self addChild:needle];

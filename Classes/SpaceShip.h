@@ -30,6 +30,8 @@
 -(CGPoint) calculateNewPosition:(CGPoint)point angleInRadians:(float)angle;
 -(float) speed;
 -(void) haultShip;
+-(void) moveShipForward;
+-(void) moveShipBackward;
 -(void) captureFlag;
 
 @end

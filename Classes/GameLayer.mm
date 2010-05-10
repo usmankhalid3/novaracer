@@ -50,12 +50,6 @@
 	[self addChild:speedometer z:3];	
 }
 
--(void)setupCameraWithSize:(CGSize) size {
-	camera = [[GameCamera alloc] init];
-	[camera setAnchorPoint:CGPointZero];
-	[camera setCameraSize:size];
-}
-
 - (void)accelerateButtonTapStarted {
     accelerateShip = YES;
 }
@@ -102,13 +96,12 @@
 		rotationAngle = 10.0f;
 		damping = 0.05f;
 		// ask director the the window size
-		CGSize size = [[CCDirector sharedDirector] winSize];
+		//CGSize size = [[CCDirector sharedDirector] winSize];
 		
 		[self setupBackground];
 		[self setupScoreLabel];
 		[self setupSpeedometer];
 		[self setupButtons];
-		[self setupCameraWithSize:size];
 		spaceLayer = [SpaceLayer node];
 		[spaceLayer setDamping:damping];
 		[self addChild:spaceLayer z:2];
@@ -137,11 +130,7 @@
 	
 	//[speedometer displaySpeed:force];
 	[[spaceLayer spaceShip] accelerateShipBy:force];
-	[camera updateCamera: [[spaceLayer spaceShip] worldPosition]];
-	[spaceLayer setCameraPosition:[camera anchorPoint]];
 	[spaceLayer tick:dt];
-	//CGPoint point = [[spaceLayer spaceShip] worldPosition];
-	//NSLog(@"%@, %@", point.x, point.y);
 }
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -179,7 +168,7 @@
 	[rotateLeftButton dealloc];
 	[rotateRightButton dealloc];
 	[spaceLayer release];
-	[camera dealloc];
+	//[camera dealloc];
 	[super dealloc];
 }
 @end

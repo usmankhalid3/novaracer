@@ -12,9 +12,11 @@
 #import "Box2D.h"
 #import "GLES-Render.h"
 #import "ContactListener.h"
+#import "GameCamera.h"
 
 @interface SpaceLayer : CCLayer {
 	b2World * world;
+	GameCamera * camera;
 	GLESDebugDraw *m_debugDraw;
 	NSMutableArray * spaceObjects;
 	SpaceShip * spaceShip;
@@ -27,9 +29,11 @@
 @property(nonatomic, readwrite) float damping;
 
 -(void) createWorldOfSize:(CGSize)size;
+-(void) createPhysicsWorldOfSize:(CGSize)size;
+-(void) setupCameraOfSize:(CGSize)size;
+-(void) updateCamera;
 -(void) initPhysicsWorldOfSize:(CGSize)size;
 -(void) addObject:(GameObject*)gameObject;
--(CGPoint) cameraPositionOf:(GameObject*)object;
 -(void) setCameraPosition:(CGPoint)cameraPosition; // applies to all objects in this layer
 -(void) addPhysicsBody:(GameObject*)object;
 -(void) tick:(ccTime)dt;

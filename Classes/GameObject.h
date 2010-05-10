@@ -7,25 +7,22 @@
 //
 
 #import "cocos2d.h"
+#import "Box2D.h"
 
 
 @interface GameObject : NSObject {
 	CCSprite * sprite;
-	CGPoint worldPosition;
 	float scaledBy;
-	int objectTag;
+	CGPoint worldPosition;
 }
 
 @property(nonatomic, readonly) CCSprite * sprite;
-@property(nonatomic, readwrite) CGPoint worldPosition;
 @property(nonatomic, readonly) float scaledBy;
-@property(nonatomic, readwrite) int objectTag;
+@property(nonatomic, readwrite) CGPoint worldPosition;
 
 -(void) setState:(NSString*)spriteName worldPosition:(CGPoint)position tag:(int)tag;
 -(void) scaleObjectBy:(float)factor;
--(CGPoint) cameraPosition;
 -(void) setCameraPosition:(CGPoint)cameraPosition;
--(NSArray*) getSprites;
-
+-(CGPoint) worldPosition;
 
 @end

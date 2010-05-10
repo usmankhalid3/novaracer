@@ -16,18 +16,41 @@
 	currentVelocity.x = (currentVelocity.x + (force * cos(CC_DEGREES_TO_RADIANS(currentRotation+90.0f))))*(1.0f - dampingPercentage);
 	currentVelocity.y = (currentVelocity.y + (force * sin(CC_DEGREES_TO_RADIANS(currentRotation+90.0f))))*(1.0f - dampingPercentage);
 	if (collided == YES) {
-		worldPosition.x = worldPosition.x - currentVelocity.x;
-		worldPosition.y = worldPosition.y - currentVelocity.y;
+		[self moveShipBackward];
 	}
 	else {
-		worldPosition.x = worldPosition.x + currentVelocity.x;
-		worldPosition.y = worldPosition.y + currentVelocity.y;
+		[self moveShipForward];
 	}
 	if (collided == YES && [self speed] <= 0.05f) {
 		collided = NO;
 		[self haultShip];
 	}
 }
+
+-(void) moveShipForward {
+	CGPoint point = sprite.position;
+	point.x = point.x + currentVelocity.x;
+	point.y = point.y + currentVelocity.y;
+	[sprite setPosition:point];
+	
+	point = worldPosition;
+	point.x = point.x + currentVelocity.x;
+	point.y = point.y + currentVelocity.y;
+	worldPosition = point;
+}
+
+-(void) moveShipBackward {
+	CGPoint point = sprite.position;
+	point.x = point.x - currentVelocity.x;
+	point.y = point.y - currentVelocity.y;
+	[sprite setPosition:point];
+	
+	point = worldPosition;
+	point.x = point.x - currentVelocity.x;
+	point.y = point.y - currentVelocity.y;
+	worldPosition = point;
+}
+
 
 -(void) haultShip {
 	currentVelocity.x = 0;
@@ -52,5 +75,4 @@
 -(float) speed {
 	return sqrt(currentVelocity.x * currentVelocity.x + currentVelocity.y * currentVelocity.y);
 }
-
 @end
