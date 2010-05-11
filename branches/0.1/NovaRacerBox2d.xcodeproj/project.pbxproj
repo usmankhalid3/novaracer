@@ -275,7 +275,6 @@
 		C28BAD451191C13000F93D03 /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = C28BAD421191C13000F93D03 /* right.png */; };
 		C28BAD461191C13000F93D03 /* top.png in Resources */ = {isa = PBXBuildFile; fileRef = C28BAD431191C13000F93D03 /* top.png */; };
 		C28D574B1193D7C100422554 /* ScrollingBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D574A1193D7C100422554 /* ScrollingBackground.m */; };
-		C28D58CF1193F24C00422554 /* gate.png in Resources */ = {isa = PBXBuildFile; fileRef = C28D58CE1193F24C00422554 /* gate.png */; };
 		C28FA1D11196C9BB00A89C9F /* red-flag.png in Resources */ = {isa = PBXBuildFile; fileRef = C28FA1D01196C9BB00A89C9F /* red-flag.png */; };
 		C28FA27E1196D28500A89C9F /* ScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C28FA27D1196D28500A89C9F /* ScoreLabel.m */; };
 		C2A9CFF1118D79BE006287F7 /* ButtonStar.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9CFE9118D79BE006287F7 /* ButtonStar.png */; };
@@ -588,7 +587,6 @@
 		C28BAD431191C13000F93D03 /* top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top.png; sourceTree = "<group>"; };
 		C28D57491193D7C100422554 /* ScrollingBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollingBackground.h; sourceTree = "<group>"; };
 		C28D574A1193D7C100422554 /* ScrollingBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollingBackground.m; sourceTree = "<group>"; };
-		C28D58CE1193F24C00422554 /* gate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gate.png; sourceTree = "<group>"; };
 		C28FA1D01196C9BB00A89C9F /* red-flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-flag.png"; sourceTree = "<group>"; };
 		C28FA27C1196D28500A89C9F /* ScoreLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreLabel.h; sourceTree = "<group>"; };
 		C28FA27D1196D28500A89C9F /* ScoreLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreLabel.m; sourceTree = "<group>"; };
@@ -1132,7 +1130,6 @@
 				C2BB2A4B1198236600634538 /* speedometer.png */,
 				C28FA1D01196C9BB00A89C9F /* red-flag.png */,
 				C2AF304B11956D0600F6367A /* map.plist */,
-				C28D58CE1193F24C00422554 /* gate.png */,
 				C28BAD411191C13000F93D03 /* left.png */,
 				C28BAD421191C13000F93D03 /* right.png */,
 				C28BAD431191C13000F93D03 /* top.png */,
@@ -1368,7 +1365,6 @@
 				C28BAD441191C13000F93D03 /* left.png in Resources */,
 				C28BAD451191C13000F93D03 /* right.png in Resources */,
 				C28BAD461191C13000F93D03 /* top.png in Resources */,
-				C28D58CF1193F24C00422554 /* gate.png in Resources */,
 				C2AF304C11956D0600F6367A /* map.plist in Resources */,
 				C28FA1D11196C9BB00A89C9F /* red-flag.png in Resources */,
 				C2BB2A4C1198236600634538 /* speedometer.png in Resources */,
