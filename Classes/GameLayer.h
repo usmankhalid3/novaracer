@@ -1,5 +1,5 @@
 
-//#import "ScrollingBackground.h"
+#import "ScrollingBackground.h"
 #import "SpaceLayer.h"
 #import "Speedometer.h"
 #import "GameButton.h"
@@ -20,7 +20,8 @@
 	GameButton * rotateLeftButton;
 	GameButton * rotateRightButton;
 	ScoreLabel * scoreLabel;
-	//ScrollingBackground * background;
+	CCSprite * background;
+	MiniMap * mmap;
 }
 
 @property(nonatomic, readwrite) float acceleration;

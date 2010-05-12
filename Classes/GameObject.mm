@@ -10,7 +10,7 @@
 
 
 @implementation GameObject
-@synthesize sprite, scaledBy, worldPosition;
+@synthesize sprite, scaledBy, worldPosition, positionIndex;
 
 -(id) init {
 	if ((self = [super init])) {
@@ -19,11 +19,12 @@
 	return self;
 }
 
--(void) setState:(NSString*)spriteName worldPosition:(CGPoint)position tag:(int)tag {
+-(void) setState:(NSString*)spriteName worldPosition:(CGPoint)position tag:(int)tag positionIndex:(int)posIndex{
 	sprite = [CCSprite spriteWithFile:spriteName];
 	[sprite setPosition:position];
 	[sprite setTag:tag];
 	worldPosition = position;
+	positionIndex = posIndex;
 }
 
 -(void) scaleObjectBy:(float)factor {

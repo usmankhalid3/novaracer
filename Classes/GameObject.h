@@ -14,13 +14,15 @@
 	CCSprite * sprite;
 	float scaledBy;
 	CGPoint worldPosition;
+	int positionIndex;
 }
 
 @property(nonatomic, readonly) CCSprite * sprite;
 @property(nonatomic, readonly) float scaledBy;
 @property(nonatomic, readwrite) CGPoint worldPosition;
+@property(nonatomic, readwrite) int positionIndex;
 
--(void) setState:(NSString*)spriteName worldPosition:(CGPoint)position tag:(int)tag;
+-(void) setState:(NSString*)spriteName worldPosition:(CGPoint)position tag:(int)tag positionIndex:(int)posIndex;
 -(void) scaleObjectBy:(float)factor;
 -(void) setCameraPosition:(CGPoint)cameraPosition;
 -(CGPoint) worldPosition;

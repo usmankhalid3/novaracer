@@ -20,10 +20,16 @@
 }
 
 -(void) setupBackground {
-	CCSprite * background = [CCSprite spriteWithFile:@"space5.jpg"];
+	
+	background = [CCSprite spriteWithFile:@"space5.jpg"];
 	background.position = ccp(240, 160);
 	//background.anchorPoint = ccp(0, 0);
 	[self addChild:background];
+	
+	CCSprite * mapBackground = [CCSprite spriteWithFile:@"map.png"];
+	[mapBackground setScale:0.4];
+	[mapBackground setPosition:CGPointMake(420, 55)];
+	[self addChild:mapBackground z:4];
 	
 	/*background = [[ScrollingBackground alloc] initWithFile:@"space5.jpg"]; 
 	
@@ -79,9 +85,9 @@
 	rotateLeftButton = [[GameButton alloc] initButtonAtLocation:@"left.png" location:CGPointMake(190, 20)];
 	rotateRightButton = [[GameButton alloc] initButtonAtLocation:@"right.png" location:CGPointMake(290, 20)];
 	
-	[self addChild:[accelerateButton button]];
-	[self addChild:[rotateLeftButton button]];
-	[self addChild:[rotateRightButton button]];
+	[self addChild:[accelerateButton button] z:4];
+	[self addChild:[rotateLeftButton button] z:4];
+	[self addChild:[rotateRightButton button] z:4];
 }
 
 
@@ -94,7 +100,7 @@
 		
 		isTouchEnabled = true;
 		
-		acceleration = 10.0f;
+		acceleration = 20.0f;
 		rotationAngle = 10.0f;
 		damping = 0.05f;
 		// ask director the the window size
@@ -108,8 +114,12 @@
 		[spaceLayer setDamping:damping];
 		[[spaceLayer spaceShip] setCurrentRotation:-90];
 		[self addChild:spaceLayer z:2];
-		MiniMap * mm = [MiniMap node];
-		[self addChild:mm z:2];
+		mmap = [MiniMap node];
+		[mmap initForWorldOfSize:CGSizeMake(3000, 3000)];
+		[mmap addFlagPositions:[spaceLayer spaceObjects]];
+		[mmap addPlanetPositions:[spaceLayer spaceObjects]];
+		[mmap addSpaceshipPosition:[[spaceLayer spaceShip] worldPosition]];
+		[self addChild:mmap z:4];
 		[self schedule:@selector(tick:)];
 		
 	}
@@ -131,6 +141,7 @@
 	if ([[spaceLayer spaceShip] collided] == YES) {
 		accelerateShip = NO;
 	}
+	
 	/*CGPoint texOffset = background.texOffset;
 	texOffset.y = texOffset.y - (50*dt);
 	texOffset.x = texOffset.x - (50*dt);
@@ -139,6 +150,7 @@
 	//[speedometer displaySpeed:force];
 	[[spaceLayer spaceShip] accelerateShipBy:force];
 	[spaceLayer tick:dt];
+	[mmap updateSpaceshipPosition:[[spaceLayer spaceShip] worldPosition]];
 }
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -164,6 +176,22 @@
 	[self rotateRightButtonTapEnded];
 	[self rotateLeftButtonTapEnded];
 }
+
+/*-(void) draw {
+	[super draw]; 
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	
+	glTranslatef( texOffset.x/[background contentSize].width, texOffset.y/[background contentSize].height, 0); 
+	//Draw the texture 
+	[background.texture drawAtPoint:CGPointZero];
+	
+	// restore default GL states
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+}*/
 
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc

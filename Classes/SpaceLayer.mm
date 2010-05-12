@@ -12,7 +12,7 @@
 
 @implementation SpaceLayer
 
-@synthesize spaceShip, damping;
+@synthesize spaceObjects, spaceShip, damping;
 
 typedef enum objectTypes {
 	kSpaceShip = 1,
@@ -26,7 +26,6 @@ typedef enum objectTypes {
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		[self setupCameraOfSize:size];
 		[self createWorldOfSize:size];
-		//[camera updateCamera:[spaceShip worldPosition]];
 		[self updateCamera];
 		[self createPhysicsWorldOfSize:size];
 	}
@@ -45,25 +44,25 @@ typedef enum objectTypes {
 }
 
 -(void) createWorldOfSize:(CGSize)size {
-	CGPoint spaceShipPosition = ccp(size.width/2, size.height/2);
-	//CGPoint spaceShipPosition = ccp(1500, 400);
+	//CGPoint spaceShipPosition = ccp(size.width/2, size.height/2);
+	CGPoint spaceShipPosition = ccp(1500, 400);
 	CGPoint planetPosition = ccp(100, 250);
 	CGPoint flagPosition = ccp(100, 300);
 	
 	spaceShip = [[SpaceShip alloc] init]; 
-	[spaceShip setState:@"spaceship.png" worldPosition:spaceShipPosition tag:kSpaceShip];
+	[spaceShip setState:@"spaceship.png" worldPosition:spaceShipPosition tag:kSpaceShip positionIndex:-1];
 	[spaceShip scaleObjectBy:0.5f];
 	[self addObject:spaceShip];
 	
-	GameObject * planet = [[GameObject alloc] init];
+	/*GameObject * planet = [[GameObject alloc] init];
 	[planet setState:@"earth.png" worldPosition:planetPosition tag:kPlanet];		
 	[planet scaleObjectBy:0.15f];
-	[self addObject:planet];
+	[self addObject:planet];*/
 	
-	GameObject * flag = [[GameObject alloc] init];
+	/*GameObject * flag = [[GameObject alloc] init];
 	[flag setState:@"red-flag.png" worldPosition:flagPosition tag:kFlag];		
 	[flag scaleObjectBy:0.15f];
-	[self addObject:flag];
+	[self addObject:flag];*/
 	
 	[self loadWorld];
 }
@@ -276,14 +275,16 @@ typedef enum objectTypes {
 		GameObject * gameObject = [[GameObject alloc] init];
 		NSString * x = [coords objectForKey:@"x"];
 		NSString * y = [coords objectForKey:@"y"];
+		NSNumber * positionIndex = [coords objectForKey:@"positionIndex"];
+		NSLog(@"%@", positionIndex);
 		CGPoint position = CGPointMake([x intValue], [y intValue]);
 		NSString * planet = @"planet";
 		if ([planet isEqualToString:[coords objectForKey:@"type"]]) {
-			[gameObject setState:@"earth.png" worldPosition:position tag:kPlanet];	
+			[gameObject setState:@"earth.png" worldPosition:position tag:kPlanet positionIndex:[positionIndex intValue]];	
 			[gameObject scaleObjectBy:0.15f];
 		}
 		else {
-			[gameObject setState:@"red-flag.png" worldPosition:position tag:kFlag];	
+			[gameObject setState:@"red-flag.png" worldPosition:position tag:kFlag positionIndex:[positionIndex intValue]];	
 			[gameObject scaleObjectBy:0.15f];
 		}
 		[self addObject:gameObject];

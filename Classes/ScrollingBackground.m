@@ -14,13 +14,15 @@
 @synthesize texOffset;
 
 - (void) draw {
+	//[super draw];
 	glEnableClientState( GL_VERTEX_ARRAY); 
 	glEnableClientState( GL_TEXTURE_COORD_ARRAY ); 
 	glEnable( GL_TEXTURE_2D); 
+	glColor4ub(color_.r, color_.g, color_.b, opacity_);
 	//Adjust the texture matrix 
 	glMatrixMode(GL_TEXTURE); 
 	glPushMatrix(); 
-	glLoadIdentity(); 
+	glLoadIdentity();
 	//We are just doing horizontal scrolling here so only adjusting x 
 	glTranslatef( texOffset.x/self.contentSize.width, texOffset.y/self.contentSize.height, 0); 
 	//Draw the texture 
@@ -28,7 +30,7 @@
 	//Restore texture matrix and switch back to modelview matrix 
 	glPopMatrix(); 
 	glMatrixMode(GL_MODELVIEW); 
-	glColor4ub( 255, 255, 255, 255); 
+	glColor4ub( 255, 255, 255, 255);
 	glDisable( GL_TEXTURE_2D); 
 	glDisableClientState(GL_VERTEX_ARRAY ); 
 	glDisableClientState( GL_TEXTURE_COORD_ARRAY ); 	
