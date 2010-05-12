@@ -22,11 +22,12 @@
 	SpaceShip * spaceShip;
 	float damping;
 	ContactListener *contactListener;
-	CGPoint worldPosition;
+	CGPoint worldPosition;	
 }
 
 @property(nonatomic, readonly) SpaceShip * spaceShip;
 @property(nonatomic, readwrite) float damping;
+@property(nonatomic, readonly) NSMutableArray * spaceObjects;
 
 -(void) createWorldOfSize:(CGSize)size;
 -(void) createPhysicsWorldOfSize:(CGSize)size;

@@ -6,6 +6,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>14</string>
 		<key>x</key>
 		<string>2000</string>
 		<key>y</key>
@@ -15,6 +17,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>13</string>
 		<key>x</key>
 		<string>1853</string>
 		<key>y</key>
@@ -24,6 +28,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>12</string>
 		<key>x</key>
 		<string>1370</string>
 		<key>y</key>
@@ -33,6 +39,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>11</string>
 		<key>x</key>
 		<string>1117</string>
 		<key>y</key>
@@ -42,6 +50,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>10</string>
 		<key>x</key>
 		<string>1030</string>
 		<key>y</key>
@@ -51,6 +61,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>17</string>
 		<key>x</key>
 		<string>1329</string>
 		<key>y</key>
@@ -60,6 +72,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>16</string>
 		<key>x</key>
 		<string>1671</string>
 		<key>y</key>
@@ -69,6 +83,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>15</string>
 		<key>x</key>
 		<string>1969</string>
 		<key>y</key>
@@ -78,6 +94,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>24</string>
 		<key>x</key>
 		<string>3000</string>
 		<key>y</key>
@@ -87,6 +105,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>23</string>
 		<key>x</key>
 		<string>2560</string>
 		<key>y</key>
@@ -96,6 +116,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>22</string>
 		<key>x</key>
 		<string>1111</string>
 		<key>y</key>
@@ -105,6 +127,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>21</string>
 		<key>x</key>
 		<string>351</string>
 		<key>y</key>
@@ -114,6 +138,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>20</string>
 		<key>x</key>
 		<string>90</string>
 		<key>y</key>
@@ -123,6 +149,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>27</string>
 		<key>x</key>
 		<string>987</string>
 		<key>y</key>
@@ -132,6 +160,8 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>26</string>
 		<key>x</key>
 		<string>2013</string>
 		<key>y</key>
@@ -141,24 +171,19 @@
 	<dict>
 		<key>type</key>
 		<string>planet</string>
+		<key>positionIndex</key>
+		<string>25</string>
 		<key>x</key>
 		<string>2013</string>
 		<key>y</key>
 		<string>90</string>
 	</dict>
-	<key>Body16</key>
-	<dict>
-		<key>type</key>
-		<string>planet</string>
-		<key>x</key>
-		<string>2909</string>
-		<key>y</key>
-		<string>987</string>
-	</dict>
 	<key>Body17</key>
 	<dict>
 		<key>type</key>
 		<string>flag</string>
+		<key>positionIndex</key>
+		<string>4</string>
 		<key>x</key>
 		<string>2500</string>
 		<key>y</key>
@@ -168,6 +193,8 @@
 	<dict>
 		<key>type</key>
 		<string>flag</string>
+		<key>positionIndex</key>
+		<string>3</string>
 		<key>x</key>
 		<string>2207</string>
 		<key>y</key>
@@ -177,6 +204,8 @@
 	<dict>
 		<key>type</key>
 		<string>flag</string>
+		<key>positionIndex</key>
+		<string>2</string>
 		<key>x</key>
 		<string>1500</string>
 		<key>y</key>
@@ -186,6 +215,8 @@
 	<dict>
 		<key>type</key>
 		<string>flag</string>
+		<key>positionIndex</key>
+		<string>1</string>
 		<key>x</key>
 		<string>793</string>
 		<key>y</key>
@@ -195,6 +226,8 @@
 	<dict>
 		<key>type</key>
 		<string>flag</string>
+		<key>positionIndex</key>
+		<string>0</string>
 		<key>x</key>
 		<string>500</string>
 		<key>y</key>
@@ -204,6 +237,8 @@
 	<dict>
 		<key>type</key>
 		<string>flag</string>
+		<key>positionIndex</key>
+		<string>7</string>
 		<key>x</key>
 		<string>793</string>
 		<key>y</key>
@@ -213,6 +248,8 @@
 	<dict>
 		<key>type</key>
 		<string>flag</string>
+		<key>positionIndex</key>
+		<string>6</string>
 		<key>x</key>
 		<string>1500</string>
 		<key>y</key>
@@ -222,6 +259,8 @@
 	<dict>
 		<key>type</key>
 		<string>flag</string>
+		<key>positionIndex</key>
+		<string>5</string>
 		<key>x</key>
 		<string>2207</string>
 		<key>y</key>
