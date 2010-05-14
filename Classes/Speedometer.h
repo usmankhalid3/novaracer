@@ -19,7 +19,7 @@
 
 @property(nonatomic, readonly) CCSprite * needle;
 
--(void) displaySpeed:(float)speed;
+-(void) displaySpeed:(float)speed accelerateShip:(BOOL)accelerateShip;
 
 
 @end

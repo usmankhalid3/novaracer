@@ -10,16 +10,19 @@
 
 
 @implementation SpaceShip
-@synthesize currentVelocity, dampingPercentage, currentRotation, collided, flagsScored, capturedFlag;
+@synthesize currentVelocity, dampingPercentage, currentRotation, collided, flagsScored, capturedFlag, worldVelocity;
 
 -(void) accelerateShipBy:(float) force {
 	currentVelocity.x = (currentVelocity.x + (force * cos(CC_DEGREES_TO_RADIANS(currentRotation))))*(1.0f - dampingPercentage);
 	currentVelocity.y = (currentVelocity.y + (force * sin(CC_DEGREES_TO_RADIANS(currentRotation))))*(1.0f - dampingPercentage);
-	if (collided == YES) {
-		[self moveShipBackward];
+	
+	worldVelocity.x = (worldVelocity.x + (force * cos(CC_DEGREES_TO_RADIANS(180-currentRotation))))*(1.0f - dampingPercentage);
+	worldVelocity.y = (worldVelocity.y + (force * sin(CC_DEGREES_TO_RADIANS(180-currentRotation))))*(1.0f - dampingPercentage);
+	if (collided == NO) {
+		[self moveShipForward];
 	}
 	else {
-		[self moveShipForward];
+		[self moveShipBackward];
 	}
 	if (collided == YES && [self speed] <= 0.05f) {
 		collided = NO;
@@ -55,6 +58,8 @@
 -(void) haultShip {
 	currentVelocity.x = 0;
 	currentVelocity.y = 0;
+	worldVelocity.x = 0;
+	worldVelocity.y = 0;
 }
 
 -(void) captureFlag {
@@ -70,7 +75,6 @@
 
 -(void) setCurrentRotation:(float)newAngle {
 	currentRotation = (float)((int)(currentRotation + newAngle) % 360);
-	NSLog(@"new angle: %f", currentRotation);
 	[sprite setRotation:currentRotation*-1];
 }
 

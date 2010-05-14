@@ -12,6 +12,7 @@
 
 @interface SpaceShip : GameObject {
 	CGPoint currentVelocity;
+	CGPoint worldVelocity;
 	float dampingPercentage;
 	float currentRotation;
 	BOOL collided;
@@ -25,6 +26,7 @@
 @property(nonatomic, readwrite) BOOL collided;
 @property(nonatomic, readwrite) int flagsScored;
 @property(nonatomic, readwrite) BOOL capturedFlag;
+@property(nonatomic, readwrite) CGPoint worldVelocity;
 
 -(void) accelerateShipBy:(float) force;
 -(CGPoint) calculateNewPosition:(CGPoint)point angleInRadians:(float)angle;

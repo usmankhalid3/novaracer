@@ -13,29 +13,34 @@
 
 @synthesize texOffset;
 
-- (void) draw {
-	//[super draw];
-	glEnableClientState( GL_VERTEX_ARRAY); 
-	glEnableClientState( GL_TEXTURE_COORD_ARRAY ); 
-	glEnable( GL_TEXTURE_2D); 
-	glColor4ub(color_.r, color_.g, color_.b, opacity_);
+- (void) draw {   
 	//Adjust the texture matrix 
 	glMatrixMode(GL_TEXTURE); 
+	
 	glPushMatrix(); 
 	glLoadIdentity();
-	//We are just doing horizontal scrolling here so only adjusting x 
+	
 	glTranslatef( texOffset.x/self.contentSize.width, texOffset.y/self.contentSize.height, 0); 
+		
 	//Draw the texture 
+	glDisableClientState(GL_COLOR_ARRAY);
 	[self.texture drawAtPoint:CGPointZero]; 
-	//Restore texture matrix and switch back to modelview matrix 
-	glPopMatrix(); 
-	glMatrixMode(GL_MODELVIEW); 
-	glColor4ub( 255, 255, 255, 255);
-	glDisable( GL_TEXTURE_2D); 
-	glDisableClientState(GL_VERTEX_ARRAY ); 
-	glDisableClientState( GL_TEXTURE_COORD_ARRAY ); 	
+	glEnableClientState(GL_COLOR_ARRAY);    
+		
+	//Restore texture matrix and switch back to modelview matrix
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
 }
 
-
+-(void) scrollWithVelocity:(CGPoint)velocity collided:(BOOL)collided {
+	if (collided==NO) {
+		texOffset.x += velocity.x;
+		texOffset.y += velocity.y;
+	}
+	else {
+		texOffset.x -= velocity.x;
+		texOffset.y -= velocity.y;
+	}
+}
 
 @end

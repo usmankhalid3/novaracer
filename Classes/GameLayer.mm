@@ -20,25 +20,11 @@
 }
 
 -(void) setupBackground {
-	
-	background = [CCSprite spriteWithFile:@"space5.jpg"];
-	background.position = ccp(240, 160);
-	//background.anchorPoint = ccp(0, 0);
-	[self addChild:background];
-	
-	CCSprite * mapBackground = [CCSprite spriteWithFile:@"map.png"];
-	[mapBackground setScale:0.4];
-	[mapBackground setPosition:CGPointMake(420, 55)];
-	[self addChild:mapBackground z:4];
-	
-	/*background = [[ScrollingBackground alloc] initWithFile:@"space5.jpg"]; 
-	
+	background = [[ScrollingBackground alloc] initWithFile:@"space.png"]; 
 	ccTexParams params = { GL_LINEAR, GL_LINEAR, GL_REPEAT, GL_REPEAT }; 
 	[background.texture setTexParameters:&params]; 
 	background.position = CGPointMake(240, 160); 
-	[self addChild:background z:1];*/
-	
-	
+	[self addChild:background z:0];
 }
 
 -(void) setupScoreLabel {
@@ -90,36 +76,44 @@
 	[self addChild:[rotateRightButton button] z:4];
 }
 
+-(void) setupSpaceLayer {	
+	spaceLayer = [SpaceLayer node];
+	[spaceLayer setDamping:damping];
+	[[spaceLayer spaceShip] setCurrentRotation:-90];
+	[self addChild:spaceLayer z:2];
+}
 
-// on "init" you need to initialize your instance
+-(void) setupMiniMap {
+	CCSprite * mapBackground = [CCSprite spriteWithFile:@"map.png"];
+	[mapBackground setScale:0.45];
+	[mapBackground setPosition:CGPointMake(420, 55)];
+	[self addChild:mapBackground z:4];
+	
+	mmap = [MiniMap node];
+	[mmap initForWorldOfSize:CGSizeMake(3000, 3000)];
+	[mmap addFlagPositions:[spaceLayer spaceObjects]];
+	[mmap addPlanetPositions:[spaceLayer spaceObjects]];
+	[mmap addSpaceshipPosition:[[spaceLayer spaceShip] worldPosition]];
+	[self addChild:mmap z:4];	
+}
+
 -(id) init
 {
-	// always call "super" init
-	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
 		
 		isTouchEnabled = true;
 		
-		acceleration = 20.0f;
+		acceleration = 10.0f;
 		rotationAngle = 10.0f;
 		damping = 0.05f;
-		// ask director the the window size
-		//CGSize size = [[CCDirector sharedDirector] winSize];
-		
+	
 		[self setupBackground];
 		[self setupScoreLabel];
 		[self setupSpeedometer];
 		[self setupButtons];
-		spaceLayer = [SpaceLayer node];
-		[spaceLayer setDamping:damping];
-		[[spaceLayer spaceShip] setCurrentRotation:-90];
-		[self addChild:spaceLayer z:2];
-		mmap = [MiniMap node];
-		[mmap initForWorldOfSize:CGSizeMake(3000, 3000)];
-		[mmap addFlagPositions:[spaceLayer spaceObjects]];
-		[mmap addPlanetPositions:[spaceLayer spaceObjects]];
-		[mmap addSpaceshipPosition:[[spaceLayer spaceShip] worldPosition]];
-		[self addChild:mmap z:4];
+		[self setupSpaceLayer];
+		[self setupMiniMap];
+		
 		[self schedule:@selector(tick:)];
 		
 	}
@@ -138,18 +132,15 @@
 	if (rotateShip!=0) {
 		[[spaceLayer spaceShip] setCurrentRotation:rotateShip]; 
 	}
-	if ([[spaceLayer spaceShip] collided] == YES) {
+	BOOL collided = [[spaceLayer spaceShip] collided];
+	if (collided == YES) {
 		accelerateShip = NO;
 	}
 	
-	/*CGPoint texOffset = background.texOffset;
-	texOffset.y = texOffset.y - (50*dt);
-	texOffset.x = texOffset.x - (50*dt);
-	background.texOffset = texOffset;*/
-	
-	//[speedometer displaySpeed:force];
+	[speedometer displaySpeed:[[spaceLayer spaceShip] speed] accelerateShip:accelerateShip];
 	[[spaceLayer spaceShip] accelerateShipBy:force];
 	[spaceLayer tick:dt];
+	[background scrollWithVelocity:[[spaceLayer spaceShip] worldVelocity] collided:collided];
 	[mmap updateSpaceshipPosition:[[spaceLayer spaceShip] worldPosition]];
 }
 
@@ -177,30 +168,10 @@
 	[self rotateLeftButtonTapEnded];
 }
 
-/*-(void) draw {
-	[super draw]; 
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
-	glTranslatef( texOffset.x/[background contentSize].width, texOffset.y/[background contentSize].height, 0); 
-	//Draw the texture 
-	[background.texture drawAtPoint:CGPointZero];
-	
-	// restore default GL states
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-}*/
-
-// on "dealloc" you need to release all your retained objects
 - (void) dealloc
 {
-	// in case you have something to dealloc, do it in this method
-	// in this particular example nothing needs to be released.
 	// cocos2d will automatically release all the children (Label)
 	
-	// don't forget to call "super dealloc"
 	[accelerateButton dealloc];
 	[rotateLeftButton dealloc];
 	[rotateRightButton dealloc];

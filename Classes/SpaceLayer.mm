@@ -20,6 +20,25 @@ typedef enum objectTypes {
 	kFlag
 } SpaceObjectType;
 
+
+-(void) setupMusic {
+	NSString * soundPath = [[NSBundle mainBundle] pathForResource:@"soulfly" ofType:@"mp3"];
+	audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:nil];
+	[audioPlayer prepareToPlay];
+	[audioPlayer play];
+	audioPlayer.volume = 0.1;
+	audioPlayer.numberOfLoops = -1;	// repeat forever
+	sndFxPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:nil];
+}
+
+-(void) playSndFx:(NSString*)filename {
+	NSString * soundPath = [[NSBundle mainBundle] pathForResource:filename ofType:@"wav"];
+	[sndFxPlayer initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:nil];
+	sndFxPlayer.volume = 0.3;
+	[sndFxPlayer prepareToPlay];
+	[sndFxPlayer play];
+}
+
 -(id) init {
 
 	if ((self = [super init])) {
@@ -28,6 +47,8 @@ typedef enum objectTypes {
 		[self createWorldOfSize:size];
 		[self updateCamera];
 		[self createPhysicsWorldOfSize:size];
+		[self setupMusic];
+		
 	}
 	return self;
 }
@@ -53,17 +74,7 @@ typedef enum objectTypes {
 	[spaceShip setState:@"spaceship.png" worldPosition:spaceShipPosition tag:kSpaceShip positionIndex:-1];
 	[spaceShip scaleObjectBy:0.5f];
 	[self addObject:spaceShip];
-	
-	/*GameObject * planet = [[GameObject alloc] init];
-	[planet setState:@"earth.png" worldPosition:planetPosition tag:kPlanet];		
-	[planet scaleObjectBy:0.15f];
-	[self addObject:planet];*/
-	
-	/*GameObject * flag = [[GameObject alloc] init];
-	[flag setState:@"red-flag.png" worldPosition:flagPosition tag:kFlag];		
-	[flag scaleObjectBy:0.15f];
-	[self addObject:flag];*/
-	
+
 	[self loadWorld];
 }
 
@@ -233,13 +244,16 @@ typedef enum objectTypes {
 			if (spriteA.tag == kFlag && spriteB.tag == kSpaceShip) {
 				toDestroy.push_back(bodyA);
 				[objB captureFlag];
+				[self playSndFx:@"flag"];
 			} else if (spriteA.tag == kSpaceShip && spriteB.tag == kFlag) {
 				toDestroy.push_back(bodyB);
 				[objA captureFlag];
+				[self playSndFx:@"flag"];
 			}
 			
 			if (spriteA.tag == kSpaceShip && spriteB.tag == kPlanet) {
 				[objA setCollided:YES];
+				[self playSndFx:@"collision"];
 			}
 		}        
 	}
@@ -305,6 +319,8 @@ typedef enum objectTypes {
 	}
 	world = NULL;
 	[camera dealloc];
+	[audioPlayer dealloc];
+	[sndFxPlayer dealloc];
 	[super dealloc];
 }
 

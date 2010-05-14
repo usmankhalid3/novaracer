@@ -22,7 +22,7 @@ typedef enum objectTypes {
 	dimensions.width = 80;
 	dimensions.height = 60;
 	xOffset = 380;
-	yOffset = 23;
+	yOffset = 25;
 	worldSize = size;
 }
 
@@ -30,11 +30,11 @@ typedef enum objectTypes {
 	[super draw];
 	glLineWidth(1.0f);
 	glPointSize(5.0f);
-	glColor4f(1.0, 0, 0, 0.5);
+	glColor4f(0.84, 0.1, 0.56, 1.0);
 	[self drawPositions:flagPositions];
-	glColor4f(0, 0, 1.0, 0.5);
+	glColor4f(0.12, 0.14, 0.91, 1.0);
 	[self drawPositions:planetPositions];
-	glColor4f(1, 1, 1, 0.5);
+	glColor4f(1, 1, 1, 1.0);
 	ccDrawPoint(ssPosition);
 }
 
@@ -46,6 +46,7 @@ typedef enum objectTypes {
 		for (int i=0; i< size; i++) {
 			pos2 = (NSValue*)[positions objectAtIndex:i];
 			ccDrawPoint([pos2 CGPointValue]);
+			//ccDrawCircle([pos2 CGPointValue], 2.5f, 0, 10, NO);
 			if (i > 0 && (i!=8)) {
 				pos1 = (NSValue*)[positions objectAtIndex:(i-1)];
 				ccDrawLine([pos1 CGPointValue], [pos2 CGPointValue]);

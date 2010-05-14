@@ -11,10 +11,11 @@
 
 @interface ScrollingBackground : CCSprite {
 	CGPoint texOffset;
+	CGPoint delta;
 }
 
 @property(nonatomic, readwrite) CGPoint texOffset;
 
--(void) draw;
+-(void) scrollWithVelocity:(CGPoint)velocity collided:(BOOL)collided;
 
 @end
