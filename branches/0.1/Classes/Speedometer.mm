@@ -17,35 +17,34 @@
 	
 	if ((self = [super init])) {
 		speedometer = [CCSprite spriteWithFile:@"speedometer.png"];
-		speedometer.position = ccp(20, 20);
+		speedometer.position = ccp(20, 10);
 		speedometer.anchorPoint = ccp(0, 0);
-		speedometer.scale = 0.8f;
+		speedometer.scale = 0.8;
 		[self addChild:speedometer];
 		
 		needle = [CCSprite spriteWithFile:@"needle.png"];
-		needle.position = ccp(66, 63);
+		needle.position = ccp(63, 51);
 		needle.anchorPoint = ccp(0, 0);
 		needle.scale = 0.20f;
 		[self addChild:needle];
 		
-		[needle runAction:[CCSequence actions: [CCRotateTo actionWithDuration:0.2f angle:-130.0f], nil]];
+		[needle runAction:[CCSequence actions: [CCRotateTo actionWithDuration:0.9f angle:-130.0f], nil]];
+		
+		needleAngle = -130.0f;
 	
 	}
 	return self;
 }
 
 
--(void) displaySpeed:(float)currentSpeed {
-	//NSLog(@"speed: %f", speed);
-	if (speed > 0.0f) {
-		float angleDegrees = needleAngle - ((speed / 50.0f) * 180.0f);
-		//NSLog(@"angle : %f", angleDegrees);
-		float cocosAngle = -1 * angleDegrees;
-		[needle runAction:[CCSequence actions: [CCRotateTo actionWithDuration:0.2f angle:cocosAngle], nil]];
-		needleAngle = angleDegrees;
-		speed = 0;
+-(void) displaySpeed:(float)currentSpeed accelerateShip:(BOOL)accelerateShip {
+	if (accelerateShip==YES && needleAngle < 100) {
+		needleAngle = needleAngle + ((currentSpeed / 500.0f) * 180.0f);
 	}
-	speed += currentSpeed;
+	else if (accelerateShip==NO && needleAngle > -130) {
+		needleAngle = needleAngle - ((currentSpeed / 50.0f) * 180.0f);
+	}
+	[needle setRotation:needleAngle];
 }
 
 @end

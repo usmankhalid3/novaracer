@@ -5,6 +5,8 @@
 #import "GameButton.h"
 #import "ScoreLabel.h"
 #import "MiniMap.h"
+#import "ScrollingBackground.h"
+
 
 // HelloWorld Layer
 @interface GameLayer : CCLayer
@@ -20,7 +22,8 @@
 	GameButton * rotateLeftButton;
 	GameButton * rotateRightButton;
 	ScoreLabel * scoreLabel;
-	CCSprite * background;
+	//CCSprite * background;
+	ScrollingBackground * background;
 	MiniMap * mmap;
 }
 
@@ -41,5 +44,7 @@
 -(void) setupBackground;
 -(void) setupSpeedometer;
 -(void) setupScoreLabel;
+-(void) setupSpaceLayer;
+-(void) setupMiniMap;
 
 @end

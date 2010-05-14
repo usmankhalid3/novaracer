@@ -13,6 +13,8 @@
 #import "GLES-Render.h"
 #import "ContactListener.h"
 #import "GameCamera.h"
+#import <AVFoundation/AVAudioPlayer.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface SpaceLayer : CCLayer {
 	b2World * world;
@@ -22,7 +24,9 @@
 	SpaceShip * spaceShip;
 	float damping;
 	ContactListener *contactListener;
-	CGPoint worldPosition;	
+	CGPoint worldPosition;
+	AVAudioPlayer * audioPlayer;
+	AVAudioPlayer * sndFxPlayer;
 }
 
 @property(nonatomic, readonly) SpaceShip * spaceShip;
@@ -39,5 +43,7 @@
 -(void) addPhysicsBody:(GameObject*)object;
 -(void) tick:(ccTime)dt;
 -(void) loadWorld;
+-(void) setupMusic;
+-(void) playSndFx:(NSString*)filename;
 
 @end
