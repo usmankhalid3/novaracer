@@ -24,7 +24,7 @@
 	else {
 		[self moveShipBackward];
 	}
-	if (collided == YES && [self speed] <= 0.05f) {
+	if (collided == YES && [self speed] <= 0.2f) {
 		collided = NO;
 		[self haultShip];
 	}
