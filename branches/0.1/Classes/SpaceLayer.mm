@@ -48,7 +48,9 @@ typedef enum objectTypes {
 		[self updateCamera];
 		[self createPhysicsWorldOfSize:size];
 		[self setupMusic];
-		
+		collisionEmitter = [[CollisionEffect alloc] initWithTotalParticles:300];
+		[collisionEmitter stopSystem];
+		[self addChild:collisionEmitter];
 	}
 	return self;
 }
@@ -254,6 +256,8 @@ typedef enum objectTypes {
 			if (spriteA.tag == kSpaceShip && spriteB.tag == kPlanet) {
 				[objA setCollided:YES];
 				[self playSndFx:@"collision"];
+				collisionEmitter.position = spriteB.position;
+				[collisionEmitter resetSystem];
 			}
 		}        
 	}
@@ -321,6 +325,7 @@ typedef enum objectTypes {
 	[camera dealloc];
 	[audioPlayer dealloc];
 	[sndFxPlayer dealloc];
+	[collisionEmitter dealloc];
 	[super dealloc];
 }
 
