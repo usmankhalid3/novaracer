@@ -6,6 +6,7 @@
 #import "ScoreLabel.h"
 #import "MiniMap.h"
 #import "ScrollingBackground.h"
+#import "CombustionEffect.h"
 
 
 // HelloWorld Layer
@@ -25,6 +26,8 @@
 	//CCSprite * background;
 	ScrollingBackground * background;
 	MiniMap * mmap;
+	CombustionEffect * emitter;
+	
 }
 
 @property(nonatomic, readwrite) float acceleration;

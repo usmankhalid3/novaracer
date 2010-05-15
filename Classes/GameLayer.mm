@@ -103,7 +103,7 @@
 		
 		isTouchEnabled = true;
 		
-		acceleration = 10.0f;
+		acceleration = 20.0f;
 		rotationAngle = 10.0f;
 		damping = 0.05f;
 	
@@ -114,10 +114,28 @@
 		[self setupSpaceLayer];
 		[self setupMiniMap];
 		
+		emitter = [[CombustionEffect alloc] initWithTotalParticles:100];
+		
+		[self addChild:emitter z:4];
 		[self schedule:@selector(tick:)];
 		
 	}
 	return self;
+}
+
+-(void) updateEmitterPosition {
+	CGPoint emitterPosition = [emitter position];
+	float currentRotation = [[spaceLayer spaceShip] currentRotation];
+	float cosValue = cos(CC_DEGREES_TO_RADIANS(-1*rotateShip));
+	float sinValue = sin(CC_DEGREES_TO_RADIANS(rotateShip));
+	emitterPosition.x = emitterPosition.x - 240;
+	emitterPosition.y = emitterPosition.y - 160;
+	emitterPosition.x = (emitterPosition.x * cosValue) - (emitterPosition.y * sinValue);
+	emitterPosition.y = (emitterPosition.x * sinValue) + (emitterPosition.y * cosValue);
+	emitterPosition.x = emitterPosition.x + 240;
+	emitterPosition.y = emitterPosition.y + 160;
+	emitter.position = emitterPosition;
+	[emitter setAngle:currentRotation];
 }
 
 -(void) tick:(float) dt {
@@ -130,7 +148,8 @@
 		force = acceleration * dt;
 	}
 	if (rotateShip!=0) {
-		[[spaceLayer spaceShip] setCurrentRotation:rotateShip]; 
+		[[spaceLayer spaceShip] setCurrentRotation:rotateShip];
+		[self updateEmitterPosition];
 	}
 	BOOL collided = [[spaceLayer spaceShip] collided];
 	if (collided == YES) {
@@ -176,6 +195,7 @@
 	[rotateLeftButton dealloc];
 	[rotateRightButton dealloc];
 	[spaceLayer release];
+	[emitter dealloc];
 	//[camera dealloc];
 	[super dealloc];
 }
