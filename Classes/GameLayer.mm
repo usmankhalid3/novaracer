@@ -44,26 +44,32 @@
 
 - (void)accelerateButtonTapStarted {
     accelerateShip = YES;
+	[emitter resetSystem];
 }
 
 - (void)accelerateButtonTapEnded {
 	accelerateShip = NO;
+	[emitter stopSystem];
 }
 
 - (void)rotateLeftButtonTapStarted{
 	rotateShip = 1;
+	[emitter resetSystem];
 }
 
 -(void) rotateLeftButtonTapEnded {
 	rotateShip = 0;
+	[emitter stopSystem];
 }
 
 - (void) rotateRightButtonTapStarted {
 	rotateShip = -1;
+	[emitter resetSystem];
 }
 
 -(void) rotateRightButtonTapEnded {
 	rotateShip = 0;
+	[emitter stopSystem];
 }
 
 -(void) setupButtons {
@@ -105,7 +111,7 @@
 		
 		acceleration = 20.0f;
 		rotationAngle = 10.0f;
-		damping = 0.05f;
+		damping = 0.015f;
 	
 		[self setupBackground];
 		[self setupScoreLabel];
@@ -115,8 +121,9 @@
 		[self setupMiniMap];
 		
 		emitter = [[CombustionEffect alloc] initWithTotalParticles:100];
-		
+		[emitter stopSystem];
 		[self addChild:emitter z:4];
+		
 		[self schedule:@selector(tick:)];
 		
 	}

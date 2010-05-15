@@ -6,13 +6,12 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-//#import "cocos2d.h"
-//#import "GameObject.h"
 #import "SpaceShip.h"
 #import "Box2D.h"
 #import "GLES-Render.h"
 #import "ContactListener.h"
 #import "GameCamera.h"
+#import "CollisionEffect.h"
 #import <AVFoundation/AVAudioPlayer.h>
 #import <AVFoundation/AVFoundation.h>
 
@@ -27,6 +26,7 @@
 	CGPoint worldPosition;
 	AVAudioPlayer * audioPlayer;
 	AVAudioPlayer * sndFxPlayer;
+	CollisionEffect * collisionEmitter;
 }
 
 @property(nonatomic, readonly) SpaceShip * spaceShip;

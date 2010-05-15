@@ -39,10 +39,10 @@
 
 -(void) displaySpeed:(float)currentSpeed accelerateShip:(BOOL)accelerateShip {
 	if (accelerateShip==YES && needleAngle < 110) {
-		needleAngle = needleAngle + ((currentSpeed / 500.0f) * 180.0f);
+		needleAngle = needleAngle + ((currentSpeed / 1300.0f) * 180.0f);
 	}
 	else if (accelerateShip==NO && needleAngle > -130) {
-		needleAngle = needleAngle - ((currentSpeed / 90.0f) * 180.0f);
+		needleAngle = needleAngle - ((currentSpeed / 1050.0f) * 180.0f);
 	}
 	[needle setRotation:needleAngle];
 }
