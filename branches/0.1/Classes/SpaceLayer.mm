@@ -51,6 +51,8 @@ typedef enum objectTypes {
 		collisionEmitter = [[CollisionEffect alloc] initWithTotalParticles:300];
 		[collisionEmitter stopSystem];
 		[self addChild:collisionEmitter];
+		
+		[self loadGame];
 	}
 	return self;
 }
@@ -285,7 +287,6 @@ typedef enum objectTypes {
 	}
 	
 	NSDictionary * map = [[NSDictionary dictionaryWithContentsOfFile:finalPath] retain];
-	NSLog(@"data : %@", map);
 	NSArray * keys = [map allKeys];
 	NSString * key;
 	for (key in [keys objectEnumerator]) {
@@ -294,7 +295,6 @@ typedef enum objectTypes {
 		NSString * x = [coords objectForKey:@"x"];
 		NSString * y = [coords objectForKey:@"y"];
 		NSNumber * positionIndex = [coords objectForKey:@"positionIndex"];
-		NSLog(@"%@", positionIndex);
 		CGPoint position = CGPointMake([x intValue], [y intValue]);
 		NSString * planet = @"planet";
 		if ([planet isEqualToString:[coords objectForKey:@"type"]]) {
@@ -311,6 +311,64 @@ typedef enum objectTypes {
 	
 	[map release];
 }
+
+-(void) setupFileForUse:(NSString*) filename {
+	//Check to see if file exists
+	NSString * completeFileName = [NSString stringWithFormat:@"%@.plist", filename];
+	//Resouce directory path
+	NSString *resourcePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", completeFileName]];
+	
+	//Documents directory path
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *DataPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:completeFileName];
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	//see if Data.plist exists in the Documents directory
+	if (![fileManager fileExistsAtPath:DataPath]) {
+		[fileManager copyItemAtPath:resourcePath toPath:DataPath error:nil];
+	}	
+}
+
+
+-(void) loadGame {
+	NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString * documentsPath = [paths objectAtIndex:0];
+	NSString * finalPath = [documentsPath stringByAppendingPathComponent:@"data.plist"];
+	
+	NSFileManager * fileManager = [NSFileManager defaultManager];
+	if (![fileManager fileExistsAtPath:finalPath] ) {
+		finalPath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"plist"];
+	}
+		
+	NSDictionary * map = [[NSDictionary dictionaryWithContentsOfFile:finalPath] retain];
+	NSArray * keys = [map allKeys];
+	NSString * key;
+	for (key in [keys objectEnumerator]) {
+		NSLog(@"%@", [map objectForKey:key]);
+	}
+	
+	[map release];
+}
+
+-(void) saveGame {
+	[self setupFileForUse:@"data"];
+
+	NSString * errorDesc;
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0]; 
+	NSString *DataPath = [documentsDirectory stringByAppendingPathComponent:@"data.plist"];
+
+	NSString * posX = [[NSString alloc] init];
+	posX = @"usman";
+	
+	NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: posX, nil] forKeys:[NSArray arrayWithObjects:@"posX", nil]];
+	NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict format:NSPropertyListXMLFormat_v1_0 errorDescription:&errorDesc];
+	if (plistData) {
+		[plistData writeToFile:DataPath atomically:YES];
+	}
+}
+
 
 -(void) dealloc {
 

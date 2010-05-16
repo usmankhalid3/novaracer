@@ -72,14 +72,21 @@
 	[emitter stopSystem];
 }
 
+-(void) saveButtonTapped {
+	[spaceLayer saveGame];	
+}
+
 -(void) setupButtons {
 	accelerateButton = [[GameButton alloc] initButtonAtLocation:@"top.png" location:CGPointMake(240, 50)];
 	rotateLeftButton = [[GameButton alloc] initButtonAtLocation:@"left.png" location:CGPointMake(190, 20)];
 	rotateRightButton = [[GameButton alloc] initButtonAtLocation:@"right.png" location:CGPointMake(290, 20)];
-	
+	saveButton = [[GameButton alloc] initButtonAtLocation:@"save.png" location:CGPointMake(430, 280)];
+	[[saveButton button] setScale:0.2];
+
 	[self addChild:[accelerateButton button] z:4];
 	[self addChild:[rotateLeftButton button] z:4];
 	[self addChild:[rotateRightButton button] z:4];
+	[self addChild:[saveButton button] z:4];
 }
 
 -(void) setupSpaceLayer {	
@@ -184,6 +191,9 @@
 		}
 		else if (CGRectContainsPoint([rotateRightButton buttonRect], location)) {
 			[self rotateRightButtonTapStarted];
+		}
+		else if (CGRectContainsPoint([saveButton buttonRect], location)) {
+			[self saveButtonTapped];
 		}
 	}
 }
