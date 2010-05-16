@@ -45,5 +45,8 @@
 -(void) loadWorld;
 -(void) setupMusic;
 -(void) playSndFx:(NSString*)filename;
+-(void) saveGame;
+-(void) setupFileForUse:(NSString*)filename;
+-(void) loadGame;
 
 @end

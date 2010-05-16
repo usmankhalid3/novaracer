@@ -22,6 +22,7 @@
 	GameButton * accelerateButton;
 	GameButton * rotateLeftButton;
 	GameButton * rotateRightButton;
+	GameButton * saveButton;
 	ScoreLabel * scoreLabel;
 	//CCSprite * background;
 	ScrollingBackground * background;
@@ -42,7 +43,8 @@
 -(void) rotateLeftButtonTapStarted;
 -(void) rotateLeftButtonTapEnded;
 -(void) rotateRightButtonTapStarted;
--(void) rotateRightButtonTapEnded;
+-(void) rotateRightButtonTapEnded;\
+-(void) saveButtonTapped;
 -(void) setupButtons;
 -(void) setupBackground;
 -(void) setupSpeedometer;
