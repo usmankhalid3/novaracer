@@ -67,8 +67,8 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 295790024;
-			PBXWorkspaceStateSaveDate = 295790024;
+			PBXPerProjectTemplateStateSaveDate = 295790073;
+			PBXWorkspaceStateSaveDate = 295790073;
 		};
 		perUserProjectItems = {
 			C255585B119D212200AEB80D /* PBXTextBookmark */ = C255585B119D212200AEB80D /* PBXTextBookmark */;
@@ -191,11 +191,12 @@
 			C2CD652D11A162D500A65103 /* PBXTextBookmark */ = C2CD652D11A162D500A65103 /* PBXTextBookmark */;
 			C2CD653C11A1644D00A65103 /* PBXTextBookmark */ = C2CD653C11A1644D00A65103 /* PBXTextBookmark */;
 			C2CD654311A1650F00A65103 /* PBXBookmark */ = C2CD654311A1650F00A65103 /* PBXBookmark */;
-			C2CD654B11A1657300A65103 /* PBXTextBookmark */ = C2CD654B11A1657300A65103 /* PBXTextBookmark */;
 			C2CD655611A165CE00A65103 /* PlistBookmark */ = C2CD655611A165CE00A65103 /* PlistBookmark */;
-			C2CD655711A165CE00A65103 /* PBXBookmark */ = C2CD655711A165CE00A65103 /* PBXBookmark */;
-			C2CD655811A165CE00A65103 /* PlistBookmark */ = C2CD655811A165CE00A65103 /* PlistBookmark */;
-			C2CD655911A165CE00A65103 /* PBXBookmark */ = C2CD655911A165CE00A65103 /* PBXBookmark */;
+			C2CD657011A1664C00A65103 /* PBXTextBookmark */ = C2CD657011A1664C00A65103 /* PBXTextBookmark */;
+			C2CD657111A1664C00A65103 /* PBXBookmark */ = C2CD657111A1664C00A65103 /* PBXBookmark */;
+			C2CD657211A1664C00A65103 /* PBXTextBookmark */ = C2CD657211A1664C00A65103 /* PBXTextBookmark */;
+			C2CD657311A1664C00A65103 /* PBXBookmark */ = C2CD657311A1664C00A65103 /* PBXBookmark */;
+			C2CD657411A1664C00A65103 /* PBXTextBookmark */ = C2CD657411A1664C00A65103 /* PBXTextBookmark */;
 			C2CE9499119D50D400677490 /* PBXTextBookmark */ = C2CE9499119D50D400677490 /* PBXTextBookmark */;
 			C2CE94B2119D530E00677490 /* PBXTextBookmark */ = C2CE94B2119D530E00677490 /* PBXTextBookmark */;
 			C2CE951D119D5C6400677490 /* PBXTextBookmark */ = C2CE951D119D5C6400677490 /* PBXTextBookmark */;
@@ -224,6 +225,13 @@
 		};
 		sourceControlManager = C2A9CFB7118D7839006287F7 /* Source Control */;
 		userBuildSettings = {
+		};
+	};
+	502BC3281120834600A0B92A /* CDAudioManager.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {708, 9310}}";
+			sepNavSelRange = "{2753, 111}";
+			sepNavVisRange = "{2473, 580}";
 		};
 	};
 	506EDC2F102F528A00A389B3 /* HelloWorldScene.h */ = {
@@ -1959,16 +1967,6 @@
 		isa = PBXBookmark;
 		fRef = 50F4144410692EE7002A0D5E /* Default.png */;
 	};
-	C2CD654B11A1657300A65103 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = C28BAD1F1191C0CC00F93D03 /* GameButton.mm */;
-		name = "GameButton.mm: 13";
-		rLen = 0;
-		rLoc = 196;
-		rType = 0;
-		vrLen = 774;
-		vrLoc = 0;
-	};
 	C2CD655611A165CE00A65103 /* PlistBookmark */ = {
 		isa = PlistBookmark;
 		fRef = 50F4144710692EE7002A0D5E /* Info.plist */;
@@ -1980,24 +1978,43 @@
 		rLen = 0;
 		rLoc = 2147483647;
 	};
-	C2CD655711A165CE00A65103 /* PBXBookmark */ = {
-		isa = PBXBookmark;
-		fRef = 50F4144610692EE7002A0D5E /* Icon.png */;
-	};
-	C2CD655811A165CE00A65103 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 50F4144710692EE7002A0D5E /* Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = /Users/adeel/Projects/novaracer/branches/0.1/Resources/Info.plist;
+	C2CD657011A1664C00A65103 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 502BC3281120834600A0B92A /* CDAudioManager.m */;
+		name = "CDAudioManager.m: 79";
 		rLen = 0;
-		rLoc = 2147483647;
+		rLoc = 2885;
+		rType = 0;
+		vrLen = 1075;
+		vrLoc = 2274;
 	};
-	C2CD655911A165CE00A65103 /* PBXBookmark */ = {
+	C2CD657111A1664C00A65103 /* PBXBookmark */ = {
 		isa = PBXBookmark;
 		fRef = 50F4144610692EE7002A0D5E /* Icon.png */;
+	};
+	C2CD657211A1664C00A65103 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C28BAD1F1191C0CC00F93D03 /* GameButton.mm */;
+		name = "GameButton.mm: 13";
+		rLen = 0;
+		rLoc = 196;
+		rType = 0;
+		vrLen = 774;
+		vrLoc = 0;
+	};
+	C2CD657311A1664C00A65103 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 50F4144610692EE7002A0D5E /* Icon.png */;
+	};
+	C2CD657411A1664C00A65103 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = C28BAD1F1191C0CC00F93D03 /* GameButton.mm */;
+		name = "GameButton.mm: 13";
+		rLen = 0;
+		rLoc = 196;
+		rType = 0;
+		vrLen = 774;
+		vrLoc = 0;
 	};
 	C2CE9499119D50D400677490 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
