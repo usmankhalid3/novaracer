@@ -14,6 +14,7 @@
 #import "CollisionEffect.h"
 #import <AVFoundation/AVAudioPlayer.h>
 #import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface SpaceLayer : CCLayer {
 	b2World * world;
@@ -25,7 +26,8 @@
 	ContactListener *contactListener;
 	CGPoint worldPosition;
 	AVAudioPlayer * audioPlayer;
-	AVAudioPlayer * sndFxPlayer;
+	SystemSoundID flagSound;
+	SystemSoundID collisionSound;
 	CollisionEffect * collisionEmitter;
 }
 
@@ -44,9 +46,10 @@
 -(void) tick:(ccTime)dt;
 -(void) loadWorld;
 -(void) setupMusic;
--(void) playSndFx:(NSString*)filename;
--(void) saveGame;
+-(void) initSndFx:(SystemSoundID*)soundId filename:(NSString*)filename;
+-(void) saveGame:(CGPoint)emitterPosition;
 -(void) setupFileForUse:(NSString*)filename;
--(void) loadGame;
+-(CGPoint) loadGame;
+-(void) playSound:(SystemSoundID)soundId;
 
 @end

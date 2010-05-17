@@ -24,19 +24,26 @@ typedef enum objectTypes {
 -(void) setupMusic {
 	NSString * soundPath = [[NSBundle mainBundle] pathForResource:@"soulfly" ofType:@"mp3"];
 	audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:nil];
+	//audioPlayer.volume = 0.1;
+	audioPlayer.numberOfLoops = -1;	// repeat forever
 	[audioPlayer prepareToPlay];
 	[audioPlayer play];
-	audioPlayer.volume = 0.1;
-	audioPlayer.numberOfLoops = -1;	// repeat forever
-	sndFxPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:nil];
+	[self initSndFx:&flagSound filename:@"flag"];
+	[self initSndFx:&collisionSound filename:@"collision"];
 }
 
--(void) playSndFx:(NSString*)filename {
-	NSString * soundPath = [[NSBundle mainBundle] pathForResource:filename ofType:@"wav"];
+-(void) initSndFx:(SystemSoundID*) soundId filename:(NSString*)filename {
+	/*NSString * soundPath = [[NSBundle mainBundle] pathForResource:filename ofType:@"wav"];
 	[sndFxPlayer initWithContentsOfURL:[NSURL fileURLWithPath:soundPath] error:nil];
-	sndFxPlayer.volume = 0.3;
-	[sndFxPlayer prepareToPlay];
-	[sndFxPlayer play];
+	sndFxPlayer.volume = 0.3;*/
+	NSString * soundPath = [[NSBundle mainBundle] pathForResource:filename ofType:@"wav"];
+	NSURL * audioFileURL = [NSURL fileURLWithPath:soundPath];
+	OSStatus err = kAudioServicesNoError;
+	err = AudioServicesCreateSystemSoundID((CFURLRef) audioFileURL, soundId);
+}
+
+-(void) playSound:(SystemSoundID) soundId {
+	AudioServicesPlayAlertSound(soundId);
 }
 
 -(id) init {
@@ -51,8 +58,6 @@ typedef enum objectTypes {
 		collisionEmitter = [[CollisionEffect alloc] initWithTotalParticles:300];
 		[collisionEmitter stopSystem];
 		[self addChild:collisionEmitter];
-		
-		[self loadGame];
 	}
 	return self;
 }
@@ -248,18 +253,18 @@ typedef enum objectTypes {
 			if (spriteA.tag == kFlag && spriteB.tag == kSpaceShip) {
 				toDestroy.push_back(bodyA);
 				[objB captureFlag];
-				[self playSndFx:@"flag"];
+				[self playSound:flagSound];
 			} else if (spriteA.tag == kSpaceShip && spriteB.tag == kFlag) {
 				toDestroy.push_back(bodyB);
 				[objA captureFlag];
-				[self playSndFx:@"flag"];
+				[self playSound:flagSound];
 			}
 			
 			if (spriteA.tag == kSpaceShip && spriteB.tag == kPlanet) {
 				[objA setCollided:YES];
-				[self playSndFx:@"collision"];
 				collisionEmitter.position = spriteB.position;
 				[collisionEmitter resetSystem];
+				[self playSound:collisionSound];
 			}
 		}        
 	}
@@ -331,42 +336,62 @@ typedef enum objectTypes {
 }
 
 
--(void) loadGame {
-	NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString * documentsPath = [paths objectAtIndex:0];
-	NSString * finalPath = [documentsPath stringByAppendingPathComponent:@"data.plist"];
+-(CGPoint) loadGame {
+	NSUserDefaults * prefs = [NSUserDefaults standardUserDefaults];
+	float rotation = [prefs floatForKey:@"rotation"];
+	int flags = [prefs integerForKey:@"flags"];
+	float posX = [prefs floatForKey:@"posX"];
+	float posY = [prefs floatForKey:@"posY"];
+	float velX = [prefs floatForKey:@"velX"];
+	float velY = [prefs floatForKey:@"velY"];
+	float wvX = [prefs floatForKey:@"wvX"];
+	float wvY = [prefs floatForKey:@"wvY"];
+	float emX = [prefs floatForKey:@"emX"];
+	float emY = [prefs floatForKey:@"emY"];
+
+	CGPoint position = CGPointMake(posX, posY);
+	CGPoint velocity = CGPointMake(velX, velY);
+	CGPoint wvelocity = CGPointMake(wvX, wvY);
+	CGPoint emitterPosition = CGPointMake(emX, emY);
 	
-	NSFileManager * fileManager = [NSFileManager defaultManager];
-	if (![fileManager fileExistsAtPath:finalPath] ) {
-		finalPath = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"plist"];
-	}
-		
-	NSDictionary * map = [[NSDictionary dictionaryWithContentsOfFile:finalPath] retain];
-	NSArray * keys = [map allKeys];
-	NSString * key;
-	for (key in [keys objectEnumerator]) {
-		NSLog(@"%@", [map objectForKey:key]);
-	}
+	[spaceShip resetState];
+	[spaceShip setCurrentRotation:rotation];
+	[spaceShip setFlagsScored:flags];
+	[spaceShip setWorldPosition:position];
+	[spaceShip setCurrentVelocity:velocity];
+	[spaceShip setWorldVelocity:wvelocity];
+
+	[self updateCamera];
 	
-	[map release];
+	return emitterPosition;
 }
 
--(void) saveGame {
-	[self setupFileForUse:@"data"];
-
-	NSString * errorDesc;
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsDirectory = [paths objectAtIndex:0]; 
-	NSString *DataPath = [documentsDirectory stringByAppendingPathComponent:@"data.plist"];
-
-	NSString * posX = [[NSString alloc] init];
-	posX = @"usman";
+-(void) saveGame:(CGPoint)emitterPosition {
+	NSUserDefaults * prefs = [NSUserDefaults standardUserDefaults];
 	
-	NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects: posX, nil] forKeys:[NSArray arrayWithObjects:@"posX", nil]];
-	NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:plistDict format:NSPropertyListXMLFormat_v1_0 errorDescription:&errorDesc];
-	if (plistData) {
-		[plistData writeToFile:DataPath atomically:YES];
-	}
+	NSNumber * rotation =  [NSNumber numberWithFloat:[spaceShip currentRotation]];
+	NSNumber * flags =  [NSNumber numberWithFloat:[spaceShip flagsScored]];
+	NSNumber * posX = [NSNumber numberWithFloat:[spaceShip worldPosition].x];
+	NSNumber * posY = [NSNumber numberWithFloat:[spaceShip worldPosition].y];
+	NSNumber * velX = [NSNumber numberWithFloat:[spaceShip currentVelocity].x];
+	NSNumber * velY = [NSNumber numberWithFloat:[spaceShip currentVelocity].y];
+	NSNumber * wvX = [NSNumber numberWithFloat:[spaceShip worldVelocity].x];
+	NSNumber * wvY = [NSNumber numberWithFloat:[spaceShip worldVelocity].y];
+	NSNumber * emX = [NSNumber numberWithFloat:emitterPosition.x];
+	NSNumber * emY = [NSNumber numberWithFloat:emitterPosition.y];
+	
+	[prefs setObject:rotation forKey:@"rotation"];
+	[prefs setObject:flags forKey:@"flags"];
+	[prefs setObject:posX forKey:@"posX"];
+	[prefs setObject:posY forKey:@"posY"];
+	[prefs setObject:velX forKey:@"velX"];
+	[prefs setObject:velY forKey:@"velY"];
+	[prefs setObject:wvX forKey:@"wvX"];
+	[prefs setObject:wvY forKey:@"wvY"];
+	[prefs setObject:emX forKey:@"emX"];
+	[prefs setObject:emY forKey:@"emY"];
+	
+	[prefs synchronize];
 }
 
 
@@ -382,8 +407,9 @@ typedef enum objectTypes {
 	world = NULL;
 	[camera dealloc];
 	[audioPlayer dealloc];
-	[sndFxPlayer dealloc];
 	[collisionEmitter dealloc];
+	AudioServicesDisposeSystemSoundID(flagSound);
+	AudioServicesDisposeSystemSoundID(collisionSound);
 	[super dealloc];
 }
 

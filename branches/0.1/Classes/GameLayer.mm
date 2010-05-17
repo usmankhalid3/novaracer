@@ -6,18 +6,16 @@
 // Import the interfaces
 #import "GameLayer.h"
 
-// HelloWorld implementation
 @implementation GameLayer
 @synthesize acceleration, damping, rotationAngle;
 
-
-+(id) scene
+/*+(id) scene
 {
 	CCScene *scene = [CCScene node];
 	GameLayer * gameLayer = [GameLayer node];
 	[scene addChild:gameLayer z:1];	
 	return scene;
-}
+}*/
 
 -(void) setupBackground {
 	background = [[ScrollingBackground alloc] initWithFile:@"space.png"]; 
@@ -72,21 +70,23 @@
 	[emitter stopSystem];
 }
 
--(void) saveButtonTapped {
-	[spaceLayer saveGame];	
+-(void) saveButtonTapped:(id) sender {
+	[spaceLayer saveGame:emitter.position];
 }
 
 -(void) setupButtons {
 	accelerateButton = [[GameButton alloc] initButtonAtLocation:@"top.png" location:CGPointMake(240, 50)];
 	rotateLeftButton = [[GameButton alloc] initButtonAtLocation:@"left.png" location:CGPointMake(190, 20)];
 	rotateRightButton = [[GameButton alloc] initButtonAtLocation:@"right.png" location:CGPointMake(290, 20)];
-	saveButton = [[GameButton alloc] initButtonAtLocation:@"save.png" location:CGPointMake(430, 280)];
-	[[saveButton button] setScale:0.2];
 
 	[self addChild:[accelerateButton button] z:4];
 	[self addChild:[rotateLeftButton button] z:4];
 	[self addChild:[rotateRightButton button] z:4];
-	[self addChild:[saveButton button] z:4];
+	
+	CCMenuItem * saveItem = [CCMenuItemFont itemFromString:@"Save" target:self selector:@selector(saveButtonTapped:)];
+	saveItem.position = ccp(200, 130);
+	CCMenu * menu = [CCMenu menuWithItems:saveItem, nil];
+	[self addChild:menu z:4];
 }
 
 -(void) setupSpaceLayer {	
@@ -108,6 +108,16 @@
 	[mmap addPlanetPositions:[spaceLayer spaceObjects]];
 	[mmap addSpaceshipPosition:[[spaceLayer spaceShip] worldPosition]];
 	[self addChild:mmap z:4];	
+}
+
+-(id) initFromStoredState {
+	if (( self = [self init] )) {	// NOT [super init]
+		CGPoint emitterPosition = [spaceLayer loadGame];
+		emitter.position = emitterPosition;
+		[self updateEmitterPosition];
+		[scoreLabel updateScore:[[spaceLayer spaceShip] flagsScored]];
+	}
+	return self;
 }
 
 -(id) init
@@ -138,7 +148,7 @@
 }
 
 -(void) updateEmitterPosition {
-	CGPoint emitterPosition = [emitter position];
+	CGPoint emitterPosition = emitter.position;
 	float currentRotation = [[spaceLayer spaceShip] currentRotation];
 	float cosValue = cos(CC_DEGREES_TO_RADIANS(-1*rotateShip));
 	float sinValue = sin(CC_DEGREES_TO_RADIANS(rotateShip));
@@ -191,9 +201,6 @@
 		}
 		else if (CGRectContainsPoint([rotateRightButton buttonRect], location)) {
 			[self rotateRightButtonTapStarted];
-		}
-		else if (CGRectContainsPoint([saveButton buttonRect], location)) {
-			[self saveButtonTapped];
 		}
 	}
 }

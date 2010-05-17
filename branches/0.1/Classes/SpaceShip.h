@@ -35,5 +35,6 @@
 -(void) moveShipForward;
 -(void) moveShipBackward;
 -(void) captureFlag;
+-(void) resetState;
 
 @end
