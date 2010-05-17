@@ -22,7 +22,6 @@
 	GameButton * accelerateButton;
 	GameButton * rotateLeftButton;
 	GameButton * rotateRightButton;
-	GameButton * saveButton;
 	ScoreLabel * scoreLabel;
 	//CCSprite * background;
 	ScrollingBackground * background;
@@ -38,18 +37,20 @@
 
 // returns a Scene that contains the HelloWorld as the only child
 +(id) scene;
+-(id) initFromStoredState;
 -(void) accelerateButtonTapStarted;
 -(void) accelerateButtonTapEnded;
 -(void) rotateLeftButtonTapStarted;
 -(void) rotateLeftButtonTapEnded;
 -(void) rotateRightButtonTapStarted;
--(void) rotateRightButtonTapEnded;\
--(void) saveButtonTapped;
+-(void) rotateRightButtonTapEnded;
+-(void) saveButtonTapped:(id)sender;
 -(void) setupButtons;
 -(void) setupBackground;
 -(void) setupSpeedometer;
 -(void) setupScoreLabel;
 -(void) setupSpaceLayer;
 -(void) setupMiniMap;
+-(void) updateEmitterPosition;
 
 @end

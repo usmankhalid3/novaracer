@@ -8,7 +8,7 @@
 
 #import "NovaRacerBox2dAppDelegate.h"
 #import "cocos2d.h"
-#import "GameLayer.h"
+#import "GameMenu.h"
 
 @implementation NovaRacerBox2dAppDelegate
 
@@ -51,7 +51,7 @@
 	[window makeKeyAndVisible];		
 		
 		
-	[[CCDirector sharedDirector] runWithScene: [GameLayer scene]];
+	[[CCDirector sharedDirector] runWithScene: [GameMenu scene]];
 }
 
 

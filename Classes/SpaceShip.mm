@@ -81,4 +81,13 @@
 -(float) speed {
 	return sqrt(currentVelocity.x * currentVelocity.x + currentVelocity.y * currentVelocity.y);
 }
+
+-(void) resetState {
+	[self setCurrentRotation:90];
+	flagsScored = 0;
+	worldPosition = CGPointZero;
+	currentVelocity = CGPointZero;
+	worldVelocity = CGPointZero;
+}
+
 @end
