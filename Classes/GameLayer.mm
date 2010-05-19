@@ -75,9 +75,9 @@
 }
 
 -(void) setupButtons {
-	accelerateButton = [[GameButton alloc] initButtonAtLocation:@"top.png" location:CGPointMake(240, 50)];
-	rotateLeftButton = [[GameButton alloc] initButtonAtLocation:@"left.png" location:CGPointMake(190, 20)];
-	rotateRightButton = [[GameButton alloc] initButtonAtLocation:@"right.png" location:CGPointMake(290, 20)];
+	accelerateButton = [[GameButton alloc] initButtonAtLocation:@"top.png" location:CGPointMake(240, 70)];
+	rotateLeftButton = [[GameButton alloc] initButtonAtLocation:@"left.png" location:CGPointMake(170, 20)];
+	rotateRightButton = [[GameButton alloc] initButtonAtLocation:@"right.png" location:CGPointMake(310, 20)];
 
 	[self addChild:[accelerateButton button] z:4];
 	[self addChild:[rotateLeftButton button] z:4];
@@ -215,12 +215,11 @@
 {
 	// cocos2d will automatically release all the children (Label)
 	
-	[accelerateButton dealloc];
-	[rotateLeftButton dealloc];
-	[rotateRightButton dealloc];
+	[accelerateButton release];
+	[rotateLeftButton release];
+	[rotateRightButton release];
 	[spaceLayer release];
-	[emitter dealloc];
-	//[camera dealloc];
+	[emitter release];
 	[super dealloc];
 }
 @end

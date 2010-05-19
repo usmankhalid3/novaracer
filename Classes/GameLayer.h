@@ -34,9 +34,6 @@
 @property(nonatomic, readwrite) float damping;
 @property(nonatomic, readwrite) float rotationAngle;
 
-
-// returns a Scene that contains the HelloWorld as the only child
-+(id) scene;
 -(id) initFromStoredState;
 -(void) accelerateButtonTapStarted;
 -(void) accelerateButtonTapEnded;

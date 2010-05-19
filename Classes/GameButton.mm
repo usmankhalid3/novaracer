@@ -17,12 +17,13 @@
 	
 	if ((self = [super init])) {
 		button = [CCSprite spriteWithFile:filename];
+		button.scale = 1.5;
 		button.position = location;
 		float actualX = button.position.x - ([button contentSize].width/2);
 		float actualY = button.position.y - ([button contentSize].height/2);
 		float buttonWidth = [button contentSize].width;
 		float buttonHeight = [button contentSize].height;
-		buttonRect = CGRectMake(actualX, actualY, buttonWidth, buttonHeight);
+		buttonRect = CGRectMake(actualX, actualY, buttonWidth*1.5, buttonHeight*1.5);
 		/*associatedObject = t;
 		tapStarted = ts;
 		tapEnded = te;

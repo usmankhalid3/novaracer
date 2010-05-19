@@ -119,12 +119,14 @@ NSComparisonResult compareGameObjects(id gObject1, id gObject2, void * context) 
 }
 
 -(void) updateSpaceshipPosition:(CGPoint)position {
-	ssPosition = [self localizePosition:position];
+	if (position.x > -100 && position.y > -500 && position.x < 3100 && position.y < 3400) {
+		ssPosition = [self localizePosition:position];
+	}
 }
 
 -(void) dealloc {	
-	[flagPositions dealloc];
-	[planetPositions dealloc];
+	[flagPositions release];
+	[planetPositions release];
 	[super dealloc];
 }
 
