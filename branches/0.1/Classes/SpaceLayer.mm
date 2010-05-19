@@ -398,16 +398,16 @@ typedef enum objectTypes {
 -(void) dealloc {
 
 	if (spaceObjects!=nil) {
-		[spaceObjects dealloc];
+		[spaceObjects release];
 	}
-	[spaceShip dealloc];
+	[spaceShip release];
 	if (world!=NULL) {
 		delete world;
 	}
 	world = NULL;
-	[camera dealloc];
-	[audioPlayer dealloc];
-	[collisionEmitter dealloc];
+	[camera release];
+	[audioPlayer release];
+	[collisionEmitter release];
 	AudioServicesDisposeSystemSoundID(flagSound);
 	AudioServicesDisposeSystemSoundID(collisionSound);
 	[super dealloc];

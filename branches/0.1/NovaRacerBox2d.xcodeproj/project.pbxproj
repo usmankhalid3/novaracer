@@ -35,7 +35,6 @@
 		50674865107A3B340090963A /* ZAttributedStringPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 50674862107A3B340090963A /* ZAttributedStringPrivate.h */; };
 		506EDB88102F4C4000A389B3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDB87102F4C4000A389B3 /* libz.dylib */; };
 		506EDBA5102F4C9F00A389B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */; };
-		506EDC31102F528A00A389B3 /* HelloWorldScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 506EDC30102F528A00A389B3 /* HelloWorldScene.mm */; };
 		506EE1A91030508200A389B3 /* libcocos2d libraries.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 506EE05E10304ED200A389B3 /* libcocos2d libraries.a */; };
 		50B1F67511130E43001483A3 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B1F62611130E43001483A3 /* Box2D.h */; };
 		50B1F67611130E43001483A3 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B1F62811130E43001483A3 /* b2BroadPhase.cpp */; };
@@ -282,13 +281,13 @@
 		C28F2364119EB221003D0FF1 /* CollisionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = C28F2363119EB221003D0FF1 /* CollisionEffect.m */; };
 		C28FA1D11196C9BB00A89C9F /* red-flag.png in Resources */ = {isa = PBXBuildFile; fileRef = C28FA1D01196C9BB00A89C9F /* red-flag.png */; };
 		C28FA27E1196D28500A89C9F /* ScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C28FA27D1196D28500A89C9F /* ScoreLabel.m */; };
+		C29298D711A3AC0E008278FE /* SpaceShip.mm in Sources */ = {isa = PBXBuildFile; fileRef = C29298D611A3AC0E008278FE /* SpaceShip.mm */; };
 		C2A4AC1311A007B200B22457 /* data.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2A4AC1111A007B200B22457 /* data.plist */; };
 		C2A4AC1411A007B200B22457 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A4AC1211A007B200B22457 /* save.png */; };
 		C2A9CFF3118D79BE006287F7 /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9CFEB118D79BE006287F7 /* earth.png */; };
 		C2A9CFF4118D79BE006287F7 /* needle.png in Resources */ = {isa = PBXBuildFile; fileRef = C2A9CFEC118D79BE006287F7 /* needle.png */; };
 		C2A9D06D118D81FA006287F7 /* GameCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2A9D062118D81FA006287F7 /* GameCamera.mm */; };
 		C2A9D06F118D81FA006287F7 /* GameObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2A9D066118D81FA006287F7 /* GameObject.mm */; };
-		C2A9D071118D81FA006287F7 /* SpaceShip.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2A9D06A118D81FA006287F7 /* SpaceShip.mm */; };
 		C2A9D072118D81FA006287F7 /* Speedometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2A9D06C118D81FA006287F7 /* Speedometer.mm */; };
 		C2AF304C11956D0600F6367A /* map.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2AF304B11956D0600F6367A /* map.plist */; };
 		C2BB28391197F02D00634538 /* SpaceLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2BB28381197F02D00634538 /* SpaceLayer.mm */; };
@@ -347,8 +346,6 @@
 		50674862107A3B340090963A /* ZAttributedStringPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAttributedStringPrivate.h; sourceTree = "<group>"; };
 		506EDB87102F4C4000A389B3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		506EDBA4102F4C9F00A389B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		506EDC2F102F528A00A389B3 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
-		506EDC30102F528A00A389B3 /* HelloWorldScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldScene.mm; sourceTree = "<group>"; };
 		506EE05E10304ED200A389B3 /* libcocos2d libraries.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d libraries.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B1F62611130E43001483A3 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		50B1F62811130E43001483A3 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -602,6 +599,7 @@
 		C28FA1D01196C9BB00A89C9F /* red-flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red-flag.png"; sourceTree = "<group>"; };
 		C28FA27C1196D28500A89C9F /* ScoreLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreLabel.h; sourceTree = "<group>"; };
 		C28FA27D1196D28500A89C9F /* ScoreLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreLabel.m; sourceTree = "<group>"; };
+		C29298D611A3AC0E008278FE /* SpaceShip.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SpaceShip.mm; sourceTree = "<group>"; };
 		C2A4AC1111A007B200B22457 /* data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = data.plist; sourceTree = "<group>"; };
 		C2A4AC1211A007B200B22457 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		C2A9CFEB118D79BE006287F7 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
@@ -613,7 +611,6 @@
 		C2A9D066118D81FA006287F7 /* GameObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameObject.mm; sourceTree = "<group>"; };
 		C2A9D067118D81FA006287F7 /* SpaceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceLayer.h; sourceTree = "<group>"; };
 		C2A9D069118D81FA006287F7 /* SpaceShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceShip.h; sourceTree = "<group>"; };
-		C2A9D06A118D81FA006287F7 /* SpaceShip.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SpaceShip.mm; sourceTree = "<group>"; };
 		C2A9D06B118D81FA006287F7 /* Speedometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Speedometer.h; sourceTree = "<group>"; };
 		C2A9D06C118D81FA006287F7 /* Speedometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Speedometer.mm; sourceTree = "<group>"; };
 		C2AF304B11956D0600F6367A /* map.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = map.plist; sourceTree = "<group>"; };
@@ -739,13 +736,11 @@
 				C2A9D067118D81FA006287F7 /* SpaceLayer.h */,
 				C2BB28381197F02D00634538 /* SpaceLayer.mm */,
 				C2A9D069118D81FA006287F7 /* SpaceShip.h */,
-				C2A9D06A118D81FA006287F7 /* SpaceShip.mm */,
+				C29298D611A3AC0E008278FE /* SpaceShip.mm */,
 				C2A9D06B118D81FA006287F7 /* Speedometer.h */,
 				C2A9D06C118D81FA006287F7 /* Speedometer.mm */,
 				50F4143710692D7D002A0D5E /* GLES-Render.h */,
 				50F4143810692D7D002A0D5E /* GLES-Render.mm */,
-				506EDC2F102F528A00A389B3 /* HelloWorldScene.h */,
-				506EDC30102F528A00A389B3 /* HelloWorldScene.mm */,
 				1F3B9A2C0EF2145700286867 /* NovaRacerBox2dAppDelegate.h */,
 				1F3B9A2B0EF2145700286867 /* NovaRacerBox2dAppDelegate.mm */,
 				C28D57491193D7C100422554 /* ScrollingBackground.h */,
@@ -1404,11 +1399,9 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1F3B9A2D0EF2145700286867 /* NovaRacerBox2dAppDelegate.mm in Sources */,
-				506EDC31102F528A00A389B3 /* HelloWorldScene.mm in Sources */,
 				50F4143910692D7D002A0D5E /* GLES-Render.mm in Sources */,
 				C2A9D06D118D81FA006287F7 /* GameCamera.mm in Sources */,
 				C2A9D06F118D81FA006287F7 /* GameObject.mm in Sources */,
-				C2A9D071118D81FA006287F7 /* SpaceShip.mm in Sources */,
 				C2A9D072118D81FA006287F7 /* Speedometer.mm in Sources */,
 				C2F5950A118D96AD007C586B /* ContactListener.mm in Sources */,
 				C28BAD201191C0CC00F93D03 /* GameButton.mm in Sources */,
@@ -1420,6 +1413,7 @@
 				C28F21FC119E7DFC003D0FF1 /* CombustionEffect.m in Sources */,
 				C28F2364119EB221003D0FF1 /* CollisionEffect.m in Sources */,
 				C2CD624A11A1378D00A65103 /* GameMenu.mm in Sources */,
+				C29298D711A3AC0E008278FE /* SpaceShip.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
