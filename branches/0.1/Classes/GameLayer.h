@@ -7,6 +7,7 @@
 #import "MiniMap.h"
 #import "ScrollingBackground.h"
 #import "CombustionEffect.h"
+#import "TimeLabel.h"
 
 
 // HelloWorld Layer
@@ -23,6 +24,7 @@
 	GameButton * rotateLeftButton;
 	GameButton * rotateRightButton;
 	ScoreLabel * scoreLabel;
+	TimeLabel * timeLabel;
 	//CCSprite * background;
 	ScrollingBackground * background;
 	MiniMap * mmap;
@@ -45,10 +47,10 @@
 -(void) setupButtons;
 -(void) setupBackground;
 -(void) setupSpeedometer;
--(void) setupScoreLabel;
+-(void) setupLabels;
 -(void) setupSpaceLayer;
 -(void) setupMiniMap;
 -(void) updateEmitterPosition;
-- (void) gameBounds;
+//- (void) gameBounds;
 
 @end

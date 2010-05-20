@@ -25,14 +25,23 @@
 	[self addChild:background z:0];
 }
 
--(void) setupScoreLabel {
+-(void) setupLabels {
 	scoreLabel = [[ScoreLabel alloc] init];
 	NSArray * content = [scoreLabel getContent];
 	NSEnumerator * enumerator = [content objectEnumerator];
 	CCNode * node;
 	while ((node = [enumerator nextObject])) {
 		[self addChild:node];
-	}	
+	}
+	
+	timeLabel = [[TimeLabel alloc] init];
+	NSArray * content1 = [timeLabel getContent];
+	NSEnumerator * enumerator1 = [content1 objectEnumerator];
+	CCNode * node1;
+	while ((node1 = [enumerator1 nextObject])) {
+		[self addChild:node1];
+	}
+	
 }
 
 -(void) setupSpeedometer {
@@ -131,7 +140,7 @@
 		damping = 0.015f;
 	
 		[self setupBackground];
-		[self setupScoreLabel];
+		[self setupLabels];
 		[self setupSpeedometer];
 		[self setupButtons];
 		[self setupSpaceLayer];
@@ -162,7 +171,7 @@
 	[emitter setAngle:currentRotation];
 }
 
-- (void) gameBounds
+/*- (void) gameBounds
 {
 	CGPoint boundaries = [[spaceLayer spaceShip] worldPosition];
 	float sCurrentRotation = [[spaceLayer spaceShip] currentRotation];
@@ -212,9 +221,10 @@
 		}
 	}
 }
-
+*/
 -(void) tick:(float) dt {
-	
+	[timeLabel updateTime];
+
 	if ([[spaceLayer spaceShip] capturedFlag]==YES) {
 		[[spaceLayer spaceShip] setCapturedFlag:NO];
 		[scoreLabel updateScore:[[spaceLayer spaceShip] flagsScored]];
@@ -234,7 +244,7 @@
 		accelerateShip = NO;
 	}
 	
-	[self gameBounds];
+	//[self gameBounds];
 	[speedometer displaySpeed:[[spaceLayer spaceShip] speed] accelerateShip:accelerateShip];
 	[[spaceLayer spaceShip] accelerateShipBy:force];
 	[spaceLayer tick:dt];
@@ -275,6 +285,8 @@
 	[rotateRightButton release];
 	[spaceLayer release];
 	[emitter release];
+	[scoreLabel release];
+	[timeLabel release];
 	[super dealloc];
 }
 @end
