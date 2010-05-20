@@ -16,5 +16,6 @@
 
 -(void) updateTime;
 -(NSArray*) getContent;
+-(NSString*) timeToString;
 
 @end
