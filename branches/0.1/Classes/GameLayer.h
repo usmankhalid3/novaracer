@@ -8,6 +8,7 @@
 #import "ScrollingBackground.h"
 #import "CombustionEffect.h"
 #import "TimeLabel.h"
+#import "GameOverLayer.h"
 
 
 // HelloWorld Layer

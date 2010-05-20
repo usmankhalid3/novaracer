@@ -223,33 +223,41 @@
 }
 */
 -(void) tick:(float) dt {
-	[timeLabel updateTime];
+	if ([[spaceLayer spaceShip] flagsScored] > 7) {
+		NSString * time = [timeLabel timeToString];
+		id layer = [[[GameOverLayer alloc] initWithString:[NSString stringWithFormat:@"Your time: %@!", time]] autorelease];
+		//id layer = [[[GameOverLayer alloc] initWithString:@"Game Over!"] autorelease];
+		[[CCDirector sharedDirector] replaceScene:layer];
+	}
+	else {
+		[timeLabel updateTime];
 
-	if ([[spaceLayer spaceShip] capturedFlag]==YES) {
-		[[spaceLayer spaceShip] setCapturedFlag:NO];
-		[scoreLabel updateScore:[[spaceLayer spaceShip] flagsScored]];
-	}
+		if ([[spaceLayer spaceShip] capturedFlag]==YES) {
+			[[spaceLayer spaceShip] setCapturedFlag:NO];
+			[scoreLabel updateScore:[[spaceLayer spaceShip] flagsScored]];
+		}
+		
 
-
-	float force = 0.0f;
-	if (accelerateShip == YES) {
-		force = acceleration * dt;
-	}
-	if (rotateShip!=0) {
-		[[spaceLayer spaceShip] setCurrentRotation:rotateShip];
-		[self updateEmitterPosition];
-	}
-	BOOL collided = [[spaceLayer spaceShip] collided];
-	if (collided == YES) {
-		accelerateShip = NO;
-	}
+		float force = 0.0f;
+		if (accelerateShip == YES) {
+			force = acceleration * dt;
+		}
+		if (rotateShip!=0) {
+			[[spaceLayer spaceShip] setCurrentRotation:rotateShip];
+			[self updateEmitterPosition];
+		}
+		BOOL collided = [[spaceLayer spaceShip] collided];
+		if (collided == YES) {
+			accelerateShip = NO;
+		}
 	
-	//[self gameBounds];
-	[speedometer displaySpeed:[[spaceLayer spaceShip] speed] accelerateShip:accelerateShip];
-	[[spaceLayer spaceShip] accelerateShipBy:force];
-	[spaceLayer tick:dt];
-	[background scrollWithVelocity:[[spaceLayer spaceShip] worldVelocity] collided:collided];
-	[mmap updateSpaceshipPosition:[[spaceLayer spaceShip] worldPosition]];
+		//[self gameBounds];
+		[speedometer displaySpeed:[[spaceLayer spaceShip] speed] accelerateShip:accelerateShip];
+		[[spaceLayer spaceShip] accelerateShipBy:force];
+		[spaceLayer tick:dt];
+		[background scrollWithVelocity:[[spaceLayer spaceShip] worldVelocity] collided:collided];
+		[mmap updateSpaceshipPosition:[[spaceLayer spaceShip] worldPosition]];
+	}
 }
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -278,8 +286,6 @@
 
 - (void) dealloc
 {
-	// cocos2d will automatically release all the children (Label)
-	
 	[accelerateButton release];
 	[rotateLeftButton release];
 	[rotateRightButton release];

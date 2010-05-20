@@ -49,6 +49,29 @@
 	[label setString:[NSString stringWithFormat:@"%@:%@", strMinutes, strSeconds]];
 }
 
+-(NSString*) timeToString {
+	int seconds = ((int)(-1*[startTime timeIntervalSinceNow]));
+	int minutes = seconds / 60;
+	seconds %= 60;
+	NSString * strMinutes;
+	NSString * strSeconds;
+	if (minutes < 10) {
+		strMinutes = [NSString stringWithFormat:@"0%d", minutes];
+	}
+	else {
+		strMinutes = [NSString stringWithFormat:@"%d", minutes];
+	}
+	if (seconds < 10) {
+		strSeconds = [NSString stringWithFormat:@"0%d", seconds];
+	}
+	else {
+		strSeconds = [NSString stringWithFormat:@"%d", seconds];
+	}
+	NSString * timeString = [NSString stringWithFormat:@"%d minutes and %d seconds", minutes, seconds];
+	[timeString autorelease];
+	return timeString;
+}
+
 -(void) dealloc {
 	[startTime release];
 	[super dealloc];
