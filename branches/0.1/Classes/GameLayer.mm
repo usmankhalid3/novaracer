@@ -84,7 +84,7 @@
 }
 
 -(void) setupButtons {
-	accelerateButton = [[GameButton alloc] initButtonAtLocation:@"top.png" location:CGPointMake(240, 70)];
+	accelerateButton = [[GameButton alloc] initButtonAtLocation:@"top.png" location:CGPointMake(240, 30)];
 	rotateLeftButton = [[GameButton alloc] initButtonAtLocation:@"left.png" location:CGPointMake(170, 20)];
 	rotateRightButton = [[GameButton alloc] initButtonAtLocation:@"right.png" location:CGPointMake(310, 20)];
 
