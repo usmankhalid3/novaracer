@@ -49,5 +49,6 @@
 -(void) setupSpaceLayer;
 -(void) setupMiniMap;
 -(void) updateEmitterPosition;
+- (void) gameBounds;
 
 @end

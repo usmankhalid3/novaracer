@@ -162,11 +162,65 @@
 	[emitter setAngle:currentRotation];
 }
 
+- (void) gameBounds
+{
+	CGPoint boundaries = [[spaceLayer spaceShip] worldPosition];
+	float sCurrentRotation = [[spaceLayer spaceShip] currentRotation];
+	CGPoint reset;
+	
+	if (boundaries.x >= 2500)
+	{
+		accelerateShip = NO;
+		if (boundaries.x >= 3000)
+		{
+			reset = ccp (2999, boundaries.y);
+			[[spaceLayer spaceShip] haultShip];
+			[[spaceLayer spaceShip] setWorldPosition:reset];
+		}
+	}
+	
+	if (boundaries.y >= 2500)
+	{
+		accelerateShip = NO;
+		if (boundaries.y >= 3000)
+		{
+			reset = ccp (boundaries.y, 2999);
+			[[spaceLayer spaceShip] haultShip];
+			[[spaceLayer spaceShip] setWorldPosition:reset];
+		}
+	}
+	
+	if (boundaries.x <= 350)
+	{
+		accelerateShip = NO;
+		if (boundaries.x <= 0)
+		{
+			reset = ccp (1, boundaries.y);
+			[[spaceLayer spaceShip] haultShip];
+			[[spaceLayer spaceShip] setWorldPosition:reset];
+		}
+	}
+	
+	if (boundaries.y <= 350)
+	{
+		accelerateShip = NO;
+		if (boundaries.x <= 0)
+		{
+			reset = ccp (boundaries.x, 1);
+			[[spaceLayer spaceShip] haultShip];
+			[[spaceLayer spaceShip] setWorldPosition:reset];
+		}
+	}
+}
+
 -(void) tick:(float) dt {
+	
 	if ([[spaceLayer spaceShip] capturedFlag]==YES) {
 		[[spaceLayer spaceShip] setCapturedFlag:NO];
 		[scoreLabel updateScore:[[spaceLayer spaceShip] flagsScored]];
 	}
+
+
 	float force = 0.0f;
 	if (accelerateShip == YES) {
 		force = acceleration * dt;
@@ -180,6 +234,7 @@
 		accelerateShip = NO;
 	}
 	
+	[self gameBounds];
 	[speedometer displaySpeed:[[spaceLayer spaceShip] speed] accelerateShip:accelerateShip];
 	[[spaceLayer spaceShip] accelerateShipBy:force];
 	[spaceLayer tick:dt];
