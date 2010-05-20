@@ -271,11 +271,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>12</integer>
+									<integer>4</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 245}, {193, 553}}</string>
+							<string>{{0, 0}, {193, 553}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -324,7 +326,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>C27458E711A57AE60066BCBA</string>
+										<string>C274593A11A58B860066BCBA</string>
 										<key>history</key>
 										<array>
 											<string>C2A9D102118D8667006287F7</string>
@@ -417,7 +419,7 @@
 											<string>C2901E0311A55A40008C1057</string>
 											<string>C2901E2B11A55A94008C1057</string>
 											<string>C2901E2C11A55A94008C1057</string>
-											<string>C2901E9A11A563BD008C1057</string>
+											<string>C274592B11A589990066BCBA</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -547,9 +549,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>C27458DC11A5784A0066BCBA</string>
+				<string>C274591911A587F60066BCBA</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>C27458DD11A5784A0066BCBA</string>
+				<string>C274591A11A587F60066BCBA</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -683,11 +685,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>C27458E811A57AE60066BCBA</string>
-		<string>C27458E911A57AE60066BCBA</string>
+		<string>C274592E11A589990066BCBA</string>
+		<string>C274592F11A589990066BCBA</string>
 		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>C2A9D002118D7B53006287F7</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/adeel/Projects/novaracer/branches/0.1/NovaRacerBox2d.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -768,7 +770,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>C2A9D002118D7B53006287F7</string>
-				<string>C27458DE11A5784A0066BCBA</string>
+				<string>C274591B11A587F60066BCBA</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -888,13 +890,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>C27458DF11A5784A0066BCBA</string>
+				<string>C274591C11A587F60066BCBA</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>C27458E011A5784A0066BCBA</string>
-				<string>C27458E111A5784A0066BCBA</string>
-				<string>C27458E211A5784A0066BCBA</string>
-				<string>C27458E311A5784A0066BCBA</string>
-				<string>C27458E411A5784A0066BCBA</string>
+				<string>C274591D11A587F60066BCBA</string>
+				<string>C274591E11A587F60066BCBA</string>
+				<string>C274591F11A587F60066BCBA</string>
+				<string>C274592011A587F60066BCBA</string>
+				<string>C274592111A587F60066BCBA</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -1048,7 +1050,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>C27458E511A5784A0066BCBA</string>
+				<string>C274592D11A589990066BCBA</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
